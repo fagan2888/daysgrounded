@@ -11,7 +11,7 @@ __all__ = [
 ]
 
 __title__ = 'daysgrounded'
-__version__ = '0.0.4'
+__version__ = '0.0.7'
 
 __desc__ = __doc__.strip()
 __license__ = 'GNU General Public License v2 or later (GPLv2+)'

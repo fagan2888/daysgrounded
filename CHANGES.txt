@@ -1,3 +1,6 @@
+v0.0.7
+Add README.rst
+
 v0.0.6
 Some cleanup
 
