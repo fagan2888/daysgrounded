@@ -1,47 +1,38 @@
-from days_grounded import __version__
+#!/usr/bin/env python
+# -*- coding: latin-1 -*-
 
-##import os
-##import sys
+from __future__ import (absolute_import, division, print_function,
+                        unicode_literals)
 
 from setuptools import setup, find_packages
 
-##def publish():
-##    os.system('python setup.py sdist upload')
-##
-##if sys.argv[-1] == 'publish':
-##    publish()
-##    sys.exit()
-##
+from daysgrounded import *
+
 setup(
-    name='days_grounded',
+    name=__title__,
     version=__version__,
-    description='Days grounded description',
-    long_description='README.txt',
-    author='Joao Matos',
-    author_email='jcrmatos@gmail.com',
-    url='http://www.github.com/jcrmatos/days_grounded',
-    license='LICENSE.txt',
-    packages=find_packages(),
-    entry_points={
-        'console_scripts': [
-            'app_con = days_grounded.days_grounded:main'
-        ],
-        'gui_scripts': [
-            'app_gui = days_grounded_gui.days_grounded:main'
-        ]
-    },
-    keywords='days grounded',
-    classifiers=[
-    'Development Status :: 4 - Beta',
-    'Environment :: Console',
-    'Intended Audience :: End Users/Desktop',
-    'Intended Audience :: Developers',
-    'Intended Audience :: System Administrators',
-    'Natural language :: Portuguese',
-    'License :: OSI Approved :: GNU General Public License v2 or later (GPLv2+)',
-    'Operating System :: OS Independent',
-    'Programming Language :: Python',
-    'Programming Language :: Python :: 2.7',
-    'Topic :: Other/Nonlisted Topic'
-    ]
+
+    description=__desc__,
+    long_description=open('README.rst').read(),
+    #long_description=(read('README.rst') + '\n\n' +
+    #                  read('HISTORY.rst') + '\n\n' +
+    #                  read('AUTHORS.rst')),
+    license=__license__,
+    url=__url__,
+
+    author=__author__,
+    author_email=__email__,
+
+    keywords=__keywords__,
+    classifiers=__classifiers__,
+
+    packages=find_packages(exclude=['tests*']),
+    #packages=__packages__,
+
+    entry_points=__entrypoints__,
+    install_requires=open('requirements.txt').read(),
+    #install_requires=open('requirements.txt').read().splitlines(),
+
+    include_package_data=True,
+    package_data=__pkgdata__
 )

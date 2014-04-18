@@ -1,0 +1,23 @@
+NOME E OBJETIVO
+
+       daysgrounded - gerir dias de castigo da(s) criança(s)
+
+LINHA DE COMANDO
+
+       daysgrounded [OPÇÃO | CRIANÇA+/-DIAS...]
+
+       -h, --help
+              Esta informação de como usar days_grounded
+
+       -a, --auto
+              Atualização automática dos castigos,
+		   baseada na data
+
+       -v, --version
+              Mostra a versão da aplicação
+
+       -l, --license
+              Mostra a licença
+
+       CRIANÇA+/-DIAS
+              eg. t+1 s-1
