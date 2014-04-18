@@ -1,23 +1,10 @@
-NOME E OBJETIVO
+    usage: daysgrounded [-option | child+/-days...]
 
-       daysgrounded - gerir dias de castigo da(s) criança(s)
+    optional arguments:
+      -h, --help            show this help message and exit
+      -a, --auto            auto update based on date
+      -v, --version         show version
+      -l, --license         shows license
+      child+/-days          eg. t+1 s-1
 
-LINHA DE COMANDO
-
-       daysgrounded [OPÇÃO | CRIANÇA+/-DIAS...]
-
-       -h, --help
-              Esta informação de como usar days_grounded
-
-       -a, --auto
-              Atualização automática dos castigos,
-		   baseada na data
-
-       -v, --version
-              Mostra a versão da aplicação
-
-       -l, --license
-              Mostra a licença
-
-       CRIANÇA+/-DIAS
-              eg. t+1 s-1
+    No argument starts gui

@@ -1,1 +1,16 @@
-v0.0.1, 20140405 -- Initial release.
+v0.0.4
+Updated README.txt, CHANGES.txt, __init__.py Trove classifiers, created AUTHORS.txt
+
+v0.0.3
+Packaging metadata files, fake rst files, start Py3 compat, separate code into sep files
+
+Added more packaging and build/pub files to ease PyPI integration, added
+some fake rst, created a build.bat to automate process, moved some
+banner and usage to text files, separate code into 3+1 files, changed
+code to start testing Py3 compatibility
+
+v0.0.2
+Changed file struc to match PyPI packaging
+
+v0.0.1 2014-04-18
+Basic func, CLI and GUI (Tkinter)
