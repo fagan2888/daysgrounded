@@ -1,7 +1,7 @@
 daysgrounded
 ============
 
-Days grounded allows you to manage your kid's grounded days (simple app for testing programming and testing procedures).
+daysgrounded allows you to manage your kid's grounded days (simple app for trying Python programming and testing procedures).
 
 Although the code is OS independent, I'm only able to test it in console (Windows Cmd) and Windows GUI.
 
@@ -9,7 +9,7 @@ Although the code is OS independent, I'm only able to test it in console (Window
 Why Should I Use This?
 ----------------------
 
-You shouldn't. It's just a fake app for allowing me to test programming and testing procedures.
+You shouldn't. It's just a fake app for allowing me to try Python programming and testing procedures.
 
 
 Features
@@ -33,6 +33,14 @@ Usage
 
 .. code:: bash
 
+    $ daysgrounded
+
+
+Options
+~~~~~~~
+
+.. code:: bash
+
     $ daysgrounded -h
     usage: daysgrounded [-option | child+/-days...]
 
@@ -44,6 +52,7 @@ Usage
       child+/-days          eg. t+1 s-1
 
     No argument starts gui
+
 
 Resources
 ---------

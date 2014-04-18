@@ -1,5 +1,5 @@
 v0.0.5
-Changed README.txt to README.md
+Updated README.txt
 
 v0.0.4
 Updated README.txt, CHANGES.txt, __init__.py Trove classifiers, created AUTHORS.txt
