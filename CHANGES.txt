@@ -1,5 +1,9 @@
 v0.0.5
+<<<<<<< HEAD
 Updated README.txt and .gitignore
+=======
+Updated README.txt
+>>>>>>> 1eea38228d92c78516c4413518aefb23e858131f
 
 v0.0.4
 Updated README.txt, CHANGES.txt, __init__.py Trove classifiers, created AUTHORS.txt
