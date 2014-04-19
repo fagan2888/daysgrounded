@@ -7,7 +7,13 @@ from __future__ import (absolute_import, division, print_function,
 from setuptools import setup, find_packages
 #import py2exe
 
-from daysgrounded import *
+#from daysgrounded import *
+from daysgrounded import (__title__, __version__,
+                          __desc__, __license__, __url__,
+                          __author__, __email__,
+                          __keywords__, __classifiers__,
+                          #__packages__,
+                          __entrypoints__, __pkgdata__)
 
 setup(
     name=__title__,

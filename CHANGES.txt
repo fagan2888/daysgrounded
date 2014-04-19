@@ -1,3 +1,6 @@
+v0.0.9
+Correct path used for datafiles and path for modules
+
 v0.0.8
 Prepare setup.py for py2exe, changes to run in both Py2 and Py3
 

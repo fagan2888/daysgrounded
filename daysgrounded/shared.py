@@ -8,18 +8,24 @@ from __future__ import (absolute_import, division, print_function,
 
 from datetime import date
 import pickle
+from pkg_resources import resource_filename
 
-#from daysgrounded import __title__, __version__, __copyright__
 from __init__ import __title__, __version__, __copyright__
 
-DATA_FILE = 'daysgrounded.pkl'
-LOG = True
-LOG_FILE = 'daysgrounded_log.pkl'
 USAGE_FILE = 'usage.txt'
 #USAGE_FILE = 'usage_en.txt'
-BANNER_FILE = 'banner.txt'
-#BANNER_FILE = 'banner_en.txt'
-LICENSE_FILE = 'LICENSE.txt'
+
+# set correct path to all data files
+DATA_PATH = resource_filename(__name__, USAGE_FILE)
+DATA_PATH = DATA_PATH.replace(USAGE_FILE, '')
+
+USAGE_FILE = DATA_PATH + USAGE_FILE
+BANNER_FILE = DATA_PATH + 'banner.txt'
+#BANNER_FILE = DATA_PATH + 'banner_en.txt'
+LICENSE_FILE = DATA_PATH + 'LICENSE.txt'
+DATA_FILE = DATA_PATH + 'daysgrounded.pkl'
+LOG = True
+LOG_FILE = DATA_PATH + 'daysgrounded_log.pkl'
 MAX_DAYS = 99
 MAX_DAYS_STR = str(MAX_DAYS)
 
@@ -63,8 +69,7 @@ def banner():
     banner_txt = ('\n' + __title__ + ' version ' + __version__ +
                   ', ' + __copyright__ + '\n')
     with open(BANNER_FILE) as f_in:
-        banner_txt += f_in.read()
-    return banner_txt
+        return banner_txt + f_in.read()
 
 def license_():
     """Returns license text, read from a file."""

@@ -7,13 +7,17 @@ goto :EXIT
 
 :PUBTEST
 python setup.py register -r test
-echo *** *** ***
+echo *** END REGISTER ***
+python setup.py sdist bdist_wininst bdist_egg bdist_wheel
+echo *** END BUILD ***
 python setup.py sdist bdist_wininst bdist_egg bdist_wheel upload -r test
 goto :EXIT
 
 :PUBFINAL
 python setup.py register -r pypi
-echo *** *** ***
+echo *** END REGISTER ***
+python setup.py sdist bdist_wininst bdist_egg bdist_wheel
+echo *** END BUILD ***
 python setup.py sdist bdist_wininst bdist_egg bdist_wheel upload -r pypi
 
 :EXIT
