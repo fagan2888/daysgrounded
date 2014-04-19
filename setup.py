@@ -5,6 +5,7 @@ from __future__ import (absolute_import, division, print_function,
                         unicode_literals)
 
 from setuptools import setup, find_packages
+#import py2exe
 
 from daysgrounded import *
 
@@ -34,5 +35,7 @@ setup(
     #install_requires=open('requirements.txt').read().splitlines(),
 
     include_package_data=True,
-    package_data=__pkgdata__
+    package_data=__pkgdata__,
+
+    #console=['daysgrounded\\__main__.py']
 )

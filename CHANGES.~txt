@@ -1,6 +1,3 @@
-v0.0.8
-Prepare setup.py for py2exe, changes to run in both Py2 and Py3
-
 v0.0.7
 Add README.rst
 
@@ -11,12 +8,10 @@ v0.0.5
 Updated README.txt
 
 v0.0.4
-Updated README.txt, CHANGES.txt, __init__.py Trove classifiers,
-created AUTHORS.txt
+Updated README.txt, CHANGES.txt, __init__.py Trove classifiers, created AUTHORS.txt
 
 v0.0.3
-Packaging metadata files, fake rst files, start Py3 compat,
-separate code into sep files
+Packaging metadata files, fake rst files, start Py3 compat, separate code into sep files
 
 Added more packaging and build/pub files to ease PyPI integration, added
 some fake rst, created a build.bat to automate process, moved some

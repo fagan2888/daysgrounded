@@ -182,7 +182,7 @@ def start(childs_, last_upd_):
     #frame.columnconfigure(0, weight=1)
     #frame.rowconfigure(0, weight=1)
 
-    prev_child = child = list(childs.viewkeys())[0]
+    prev_child = child = list(childs.keys())[0]
 
     child_lbl = tk.StringVar(value='Criança:')
     last_upd_lbl = tk.StringVar(value='Última atualização:')
@@ -200,7 +200,7 @@ def start(childs_, last_upd_):
     # 2nd row
     tk_ttk.Label(frame, textvariable=child_lbl).grid(column=1, row=2)
     childs_combo = tk_ttk.Combobox(frame, state='readonly', #width=10,
-                                   values=list(childs.viewkeys()))
+                                   values=list(childs.keys()))
     childs_combo.grid(column=2, row=2)
     childs_combo.set(child)
     childs_combo.bind('<<ComboboxSelected>>', childs_combo_chg)

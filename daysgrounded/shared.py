@@ -9,7 +9,8 @@ from __future__ import (absolute_import, division, print_function,
 from datetime import date
 import pickle
 
-from daysgrounded import __title__, __version__, __copyright__
+#from daysgrounded import __title__, __version__, __copyright__
+from __init__ import __title__, __version__, __copyright__
 
 DATA_FILE = 'daysgrounded.pkl'
 LOG = True
