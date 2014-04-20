@@ -7,22 +7,27 @@ from __future__ import (absolute_import, division, print_function,
                         unicode_literals)
 
 from datetime import date
+import sys
 import pickle
 from pkg_resources import resource_filename
 
-from __init__ import __title__, __version__, __copyright__
-
-USAGE_FILE = 'usage.txt'
-#USAGE_FILE = 'usage_en.txt'
+import globalcfg
 
 # set correct path to all data files
-DATA_PATH = resource_filename(__name__, USAGE_FILE)
-DATA_PATH = DATA_PATH.replace(USAGE_FILE, '')
+try:
+    DATA_PATH = resource_filename(__name__, globalcfg.USAGE_FILE)
+    DATA_PATH = DATA_PATH.replace(globalcfg.USAGE_FILE, '')
+except:
+    # if current module is frozen, use library.zip path
+    if hasattr(sys, 'frozen'):
+        DATA_PATH = sys.prefix
+        DATA_PATH.strip('/')
+        DATA_PATH += '/'
 
-USAGE_FILE = DATA_PATH + USAGE_FILE
-BANNER_FILE = DATA_PATH + 'banner.txt'
-#BANNER_FILE = DATA_PATH + 'banner_en.txt'
-LICENSE_FILE = DATA_PATH + 'LICENSE.txt'
+USAGE_FILE = DATA_PATH + globalcfg.USAGE_FILE
+BANNER_FILE = DATA_PATH + globalcfg.BANNER_FILE
+LICENSE_FILE = DATA_PATH + globalcfg.LICENSE_FILE
+
 DATA_FILE = DATA_PATH + 'daysgrounded.pkl'
 LOG = True
 LOG_FILE = DATA_PATH + 'daysgrounded_log.pkl'
@@ -66,8 +71,8 @@ def usage():
 
 def banner():
     """Returns banner text."""
-    banner_txt = ('\n' + __title__ + ' version ' + __version__ +
-                  ', ' + __copyright__ + '\n')
+    banner_txt = ('\n' + globalcfg.NAME + ' version ' + globalcfg.VERSION +
+                  ', ' + globalcfg.COPYRIGHT + '\n')
     with open(BANNER_FILE) as f_in:
         return banner_txt + f_in.read()
 
