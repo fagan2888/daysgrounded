@@ -1,4 +1,4 @@
-v0.0.10
+v0.0.10 2014-04-19
 Finalize py2exe cfg, create globalcfg.py
 
 v0.0.9

@@ -1,2 +1,5 @@
 include *.txt
+include daysgrounded\banner.txt
+include daysgrounded\LICENSE.txt
+include daysgrounded\usage.txt
 exclude daysgrounded\*.pkl

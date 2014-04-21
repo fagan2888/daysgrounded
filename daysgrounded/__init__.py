@@ -43,5 +43,5 @@ ENTRY_POINTS = {
     #'gui_scripts': ['app_gui = daysgrounded.daysgrounded:start']
     }
 
-PKG_DATA = {'daysgrounded': ['*.txt']}
+PKG_DATA = {'daysgrounded': ['usage.txt', 'LICENSE.txt', 'banner.txt']}
 #PKG_DATA= {'': ['*.txt'], 'daysgrounded': ['*.txt']}

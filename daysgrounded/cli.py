@@ -102,7 +102,7 @@ def dispatch(argv):
         if arg0 in ['-h', '--help']:
             print(shared.usage())
         elif arg0 in ['-v', '--version']:
-            print('Versão', shared.__version__)
+            print('Versão', shared.VERSION)
         elif arg0 in ['-l', '--license']:
             print(shared.license_())
         elif arg0 in ['-a', '--auto']:

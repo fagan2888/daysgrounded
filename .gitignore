@@ -189,11 +189,7 @@ $RECYCLE.BIN/
 
 *.py[co]
 *.pkl
-*.~py
-*.~txt
-*.~rst
-*.~bat
-*.~cfg
+*.~*
 
 # Packages
 *.egg
