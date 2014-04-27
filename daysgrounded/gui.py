@@ -3,6 +3,7 @@
 
 """Blablabla."""
 
+# Python 3 compatibility
 from __future__ import (absolute_import, division, print_function,
                         unicode_literals)
 
@@ -24,11 +25,9 @@ child = None
 childs = None
 last_upd = None
 
-def start(childs_, last_upd_):
+def start():
+    """Print banner, read/create data & log file and start gui."""
     global prev_child, child, childs, last_upd
-
-    childs = childs_
-    last_upd = last_upd_
 
     def plus_btn(*args):
         """Blablabla."""
@@ -60,12 +59,10 @@ def start(childs_, last_upd_):
 
         if 0 <= int(days_var.get()) <= shared.MAX_DAYS:
             childs[prev_child] = int(days_var.get())
-
             child = prev_child = childs_combo.get()
             days_var.set(childs[child])
         else:
             childs_combo.set(prev_child)
-
             tk_msg_box.showwarning('AVISO',
                                    'O número de dias tem que estar entre 0 e ' +
                                    shared.MAX_DAYS_STR)
@@ -81,18 +78,12 @@ def start(childs_, last_upd_):
 
         if 0 <= int(days_var.get()) <= shared.MAX_DAYS:
             childs[childs_combo.get()] = int(days_var.get())
-
             if upd:
-                days_to_remove = (date.today()- last_upd).days
-
-                for child in childs:
-                    childs[child] -= days_to_remove
-                    childs[child] = max(0, childs[child])
-
-            last_upd = date.today()
+                last_upd = shared.update_childs(childs, last_upd)
+            else:
+                last_upd = date.today()
+                shared.update_file(childs, last_upd)
             last_upd_var.set(value=str(last_upd))
-
-            shared.update_file(childs, last_upd)
         else:
             tk_msg_box.showwarning('AVISO',
                                    'O número de dias tem que estar entre 0 e ' +
@@ -102,6 +93,7 @@ def start(childs_, last_upd_):
         """Blablabla."""
         if tk_msg_box.askokcancel("Sair", "Tem a certeza que pretende sair?"):
             root.destroy()
+            sys.exit(0) # ToDo: other return codes
 
     def digits_only(up_down, idx, value, prev_val, char, val_type, source,
                     widget):
@@ -128,6 +120,9 @@ def start(childs_, last_upd_):
         """Blablabla."""
         tk_msg_box.showinfo('Ajuda', shared.usage())
 
+
+    print(shared.banner())
+    childs, last_upd = shared.open_create_datafile()
 
     root = tk.Tk()
     root.withdraw()
@@ -182,6 +177,7 @@ def start(childs_, last_upd_):
     #frame.columnconfigure(0, weight=1)
     #frame.rowconfigure(0, weight=1)
 
+    # must convert to list for Python 3 compatibility
     prev_child = child = list(childs.keys())[0]
 
     child_lbl = tk.StringVar(value='Criança:')

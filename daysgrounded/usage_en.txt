@@ -7,4 +7,5 @@
       -l, --license         shows license
       child+/-days          eg. t+1 s-1
 
-    No argument starts gui
+    No argument starts gui.
+    Maximum of 99 days.

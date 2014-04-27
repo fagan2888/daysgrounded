@@ -3,11 +3,13 @@
 
 """Shared constants and funtions."""
 
+# Python 3 compatibility
 from __future__ import (absolute_import, division, print_function,
                         unicode_literals)
 
 from datetime import date
 import sys
+from os import path
 import pickle
 from pkg_resources import resource_filename
 
@@ -76,7 +78,29 @@ def banner():
     with open(BANNER_FILE) as f_in:
         return banner_txt + f_in.read()
 
+def version():
+    """Returns version."""
+    return globalcfg.VERSION
+
 def license_():
     """Returns license text, read from a file."""
     with open(LICENSE_FILE) as f_in:
         return f_in.read()
+
+def auto_upd_datafile(childs, last_upd):
+    """Automatic update based on current date vs last update date."""
+    right_now = date.today()
+    days_to_remove = (right_now - last_upd).days # convert to days and assign
+    for child in childs:
+        childs[child] -= days_to_remove
+        childs[child] = max(0, childs[child])
+    update_file(childs, right_now)
+    return right_now
+
+def open_create_datafile():
+    """Opens datafile if it exists, otherwise creates it."""
+    if path.isfile(DATA_FILE): # if file exists
+        childs, last_upd = read_file()
+    else:
+        childs, last_upd = create_file()
+    return childs, last_upd
