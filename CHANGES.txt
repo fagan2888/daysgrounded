@@ -1,3 +1,6 @@
+v0.0.15 2014-05-07
+Forgot to update globalcfg.py :)
+
 v0.0.14 2014-05-07
 build.bat - added cxf and py2exe options
 gui.py - corrected function error

@@ -15,7 +15,7 @@ BANNER_FILE = 'banner.txt'
 LICENSE_FILE = 'LICENSE.txt'
 
 NAME = 'daysgrounded'
-VERSION = '0.0.13'
+VERSION = '0.0.15'
 COPYRIGHT = 'Copyright 2014 Joao Matos'
 
 DATA_FILES = [('', [NAME + '\\' + USAGE_FILE]),
