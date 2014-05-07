@@ -1,11 +1,12 @@
 #!/usr/bin/env python
-# -*- coding: latin-1 -*-
+# -*- coding: utf-8 -*-
 
 """Manage child(s) grounded days."""
 
 # Python 3 compatibility
-from __future__ import (absolute_import, division, print_function,)
-                        #unicode_literals)
+from __future__ import (absolute_import, division, print_function,
+                        #unicode_literals
+                       )
 # The above unicode_literals import prevents setup.py from working.
 # It seems to be a bug in setuptools.
 
@@ -39,10 +40,9 @@ CLASSIFIERS = [# Use below to prevent any unwanted publishing
 
 #PACKAGES = ['daysgrounded']
 
-ENTRY_POINTS = {
-    'console_scripts': ['daysgrounded = daysgrounded.__main__:main'],
-    #'gui_scripts': ['app_gui = daysgrounded.daysgrounded:start']
-    }
+ENTRY_POINTS = dict(console_scripts=['daysgrounded=daysgrounded.__main__:main'],
+                    #gui_scripts=['app_gui=daysgrounded.daysgrounded:start']
+                   )
 
-PKG_DATA = {'daysgrounded': ['usage.txt', 'LICENSE.txt', 'banner.txt']}
-#PKG_DATA= {'': ['*.txt'], 'daysgrounded': ['*.txt']}
+PKG_DATA = dict(daysgrounded=['usage.txt', 'LICENSE.txt', 'banner.txt'])
+#PKG_DATA = {'': ['*.txt'], 'daysgrounded': ['*.txt']}

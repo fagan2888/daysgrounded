@@ -1,14 +1,12 @@
 #!/usr/bin/env python
-# -*- coding: latin-1 -*-
+# -*- coding: utf-8 -*-
 
 # Python 3 compatibility
 from __future__ import (absolute_import, division, print_function,
                         unicode_literals)
 
-##import sys
 from setuptools import setup, find_packages
-#import py2exe
-##from cx_Freeze import setup, Executable
+import py2exe
 
 from daysgrounded.globalcfg import NAME, VERSION, DATA_FILES
 from daysgrounded import (DESC, LICENSE, URL, KEYWORDS, CLASSIFIERS, #PACKAGES,
@@ -16,19 +14,6 @@ from daysgrounded import (DESC, LICENSE, URL, KEYWORDS, CLASSIFIERS, #PACKAGES,
 
 AUTHOR = 'Joao Matos'
 SCRIPT = NAME + '\\__main__.py'
-
-### cx_Freeze config for bdist_msi
-##bdist_msi_options = {
-##    'upgrade_code': '{66620F3A-DC3A-11E2-B341-002219E9B01E}',
-##    'add_to_path': False,
-##    'initial_target_dir': r'[ProgramFilesFolder]\%s\%s' % (AUTHOR, NAME),
-##    }
-##build_exe_options = {'includes': ['atexit', 'PySide.QtNetwork']}
-### GUI applications require a different base on Windows
-##base = None
-##if sys.platform == 'win32':
-##    base = 'Win32GUI'
-##exe = Executable(script=SCRIPT, base=base) #, icon='daysgrounded.ico')
 
 setup(name=NAME,
       version=VERSION,
@@ -63,10 +48,6 @@ setup(name=NAME,
       package_data=PKG_DATA,
 
       # py2exe config
-      #console=[SCRIPT],
-      #data_files=DATA_FILES,
-
-##      # cx_Freeze config for bdist_msi
-##      executables=[exe],
-##      options={'bdist_msi': bdist_msi_options, 'build_exe': build_exe_options}
+      console=[SCRIPT],
+      data_files=DATA_FILES,
      )

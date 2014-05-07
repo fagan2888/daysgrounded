@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-# -*- coding: latin-1 -*-
+# -*- coding: utf-8 -*-
 
 """Blablabla."""
 
@@ -64,7 +64,7 @@ def start():
         else:
             childs_combo.set(prev_child)
             tk_msg_box.showwarning('AVISO',
-                                   'O número de dias tem que estar entre 0 e ' +
+                                   'O nÃºmero de dias tem que estar entre 0 e ' +
                                    shared.MAX_DAYS_STR)
 
     def set_upd_btn(upd):
@@ -79,14 +79,14 @@ def start():
         if 0 <= int(days_var.get()) <= shared.MAX_DAYS:
             childs[childs_combo.get()] = int(days_var.get())
             if upd:
-                last_upd = shared.update_childs(childs, last_upd)
+                last_upd = shared.auto_upd_datafile(childs, last_upd)
             else:
                 last_upd = date.today()
                 shared.update_file(childs, last_upd)
             last_upd_var.set(value=str(last_upd))
         else:
             tk_msg_box.showwarning('AVISO',
-                                   'O número de dias tem que estar entre 0 e ' +
+                                   'O nÃºmero de dias tem que estar entre 0 e ' +
                                    shared.MAX_DAYS_STR)
 
     def confirm_exit():
@@ -180,8 +180,8 @@ def start():
     # must convert to list for Python 3 compatibility
     prev_child = child = list(childs.keys())[0]
 
-    child_lbl = tk.StringVar(value='Criança:')
-    last_upd_lbl = tk.StringVar(value='Última atualização:')
+    child_lbl = tk.StringVar(value='CrianÃ§a:')
+    last_upd_lbl = tk.StringVar(value='Ãšltima atualizaÃ§Ã£o:')
 
     days_var = tk.StringVar(value=childs[child])
     last_upd_var = tk.StringVar(value=str(last_upd))

@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-# -*- coding: latin-1 -*-
+# -*- coding: utf-8 -*-
 
 """Shared constants and funtions."""
 
@@ -17,13 +17,16 @@ import globalcfg
 
 # set correct path to all data files
 try:
+    # DATA_PATH = X:\PyhtonXX\Lib\site-packages\daysgrounded
     DATA_PATH = resource_filename(__name__, globalcfg.USAGE_FILE)
     DATA_PATH = DATA_PATH.replace(globalcfg.USAGE_FILE, '')
 except:
     # if current module is frozen, use library.zip path
+    # DATA_PATH = exe location
     if hasattr(sys, 'frozen'):
-        DATA_PATH = sys.prefix
-        DATA_PATH.strip('/')
+##        DATA_PATH = sys.prefix
+##        DATA_PATH.strip('/')
+        DATA_PATH = path.dirname(sys.executable)
         DATA_PATH += '/'
 
 USAGE_FILE = DATA_PATH + globalcfg.USAGE_FILE

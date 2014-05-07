@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-# -*- coding: latin-1 -*-
+# -*- coding: utf-8 -*-
 
 """Processes command line arguments and updates child's records."""
 
@@ -21,8 +21,7 @@ def print_state(childs, last_upd):
     print(str(last_upd))
 
 def man_upd(argv, childs, last_upd):
-    """
-    Manual update based on args.
+    """Manual update based on args.
 
     First it checks all args and only if all are correct are they processed.
     """
@@ -88,7 +87,7 @@ def start(argv):
     if arg0 in ['-h', '--help']:
         print(shared.usage())
     elif arg0 in ['-v', '--version']:
-        print('Vers„o', shared.version())
+        print('Vers√£o', shared.version())
     elif arg0 in ['-l', '--license']:
         print(shared.license_())
     elif arg0 in ['-a', '--auto']:

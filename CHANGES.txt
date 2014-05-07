@@ -1,3 +1,9 @@
+v0.0.14 2014-05-07
+build.bat - added cxf and py2exe options
+gui.py - corrected function error
+created cxfreeze_setup.py
+shared.py - corrected data_path for frozen dists
+
 v0.0.13 2014-04-27
 Changed __main__ to call cli or gui modules, created open_create_datafile,
 auto_upd_datafile and version in shared module. Corrected usage.txt and
