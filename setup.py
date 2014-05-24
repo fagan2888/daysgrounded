@@ -6,7 +6,7 @@ from __future__ import (absolute_import, division, print_function,
                         unicode_literals)
 
 from setuptools import setup, find_packages
-import py2exe
+#import py2exe # remark unicode_literals in globalcfg.py
 
 from daysgrounded.globalcfg import NAME, VERSION, DATA_FILES
 from daysgrounded import (DESC, LICENSE, URL, KEYWORDS, CLASSIFIERS, #PACKAGES,
@@ -30,7 +30,8 @@ setup(name=NAME,
       keywords=KEYWORDS,
       classifiers=CLASSIFIERS,
 
-      packages=find_packages(exclude=['tests*']),
+      packages=find_packages(),
+      #packages=find_packages(exclude=['tests*']),
       #packages=PACKAGES,
 
       # to create the Scripts exe using bdist_wininst build option
@@ -48,6 +49,6 @@ setup(name=NAME,
       package_data=PKG_DATA,
 
       # py2exe config
-      console=[SCRIPT],
-      data_files=DATA_FILES,
+      #console=[SCRIPT],
+      #data_files=DATA_FILES,
      )

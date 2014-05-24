@@ -3,8 +3,7 @@
 
 # Python 3 compatibility
 from __future__ import (absolute_import, division, print_function,
-                        #unicode_literals
-                       )
+                        unicode_literals)
 
 import sys
 from cx_Freeze import setup, Executable
@@ -13,12 +12,11 @@ from daysgrounded.globalcfg import NAME, VERSION, DATA_FILES
 from daysgrounded import (DESC, LICENSE, URL, KEYWORDS, CLASSIFIERS)
 
 AUTHOR = 'Joao Matos'
-SCRIPT = NAME + '\\__main__.py'
+SCRIPT = NAME + '/__main__.py'
 TARGET_NAME = NAME + '.exe'
 
-# cx_Freeze config
 base = None
-2# GUI applications require a different base on Windows
+# GUI applications require a different base on Windows
 if sys.platform == 'win32':
     base = 'Win32GUI'
 

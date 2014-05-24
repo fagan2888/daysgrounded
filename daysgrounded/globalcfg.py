@@ -5,7 +5,7 @@
 
 # Python 3 compatibility
 from __future__ import (absolute_import, division, print_function,
-                        #unicode_literals # must be removed for py2exe setup
+                        unicode_literals # must be removed for py2exe setup
                        )
 
 USAGE_FILE = 'usage.txt'
@@ -15,7 +15,7 @@ BANNER_FILE = 'banner.txt'
 LICENSE_FILE = 'LICENSE.txt'
 
 NAME = 'daysgrounded'
-VERSION = '0.0.15'
+VERSION = '0.0.16'
 COPYRIGHT = 'Copyright 2014 Joao Matos'
 
 DATA_FILES = [('', [NAME + '\\' + USAGE_FILE]),

@@ -1,3 +1,6 @@
+v0.0.16 2014-05-24
+Added sphinx and ReadTheDocs documentation
+
 v0.0.15 2014-05-07
 Forgot to update globalcfg.py :)
 
