@@ -63,12 +63,6 @@ cd ..
 pause
 cls
 
-if not exist %PROJECT%\doc md %PROJECT%\doc
-xcopy /y /e doc\_build\html\*.* %PROJECT%\doc\ > nul
-copy /y doc\_build\latex\%PROJECT%.pdf %PROJECT%\doc > nul
-
-cls
-
 if "%1"=="test" goto :TEST
 if "%1"=="pypi" goto :PYPI
 if "%1"=="cxf" goto :CXF
@@ -91,7 +85,7 @@ echo ***
 pause
 cls
 
-python setup.py sdist bdist_egg bdist_wininst bdist_wheel
+rem python setup.py sdist bdist_egg bdist_wininst bdist_wheel
 python setup.py sdist bdist_egg bdist_wininst bdist_wheel upload -r test
 goto :EXIT
 
@@ -106,7 +100,7 @@ echo ***
 pause
 cls
 
-python setup.py sdist bdist_egg bdist_wininst bdist_wheel
+rem python setup.py sdist bdist_egg bdist_wininst bdist_wheel
 python setup.py sdist bdist_egg bdist_wininst bdist_wheel upload -r pypi
 goto :EXIT
 
@@ -117,6 +111,9 @@ echo ***
 python cxf_setup.py build bdist_msi
 rem python cxf_setup.py build_exe
 rem cxfreeze cxf_setup.py build_exe
+echo ***
+echo *** Copy datafiles
+echo ***
 copy build\exe.win32-%PY_VER%\%PROJECT%\*.* build\exe.win32-%PY_VER%
 goto :EXIT
 

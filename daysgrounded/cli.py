@@ -6,13 +6,16 @@
 # Python 3 compatibility
 from __future__ import (absolute_import, division, print_function,
                         unicode_literals)
-
 from datetime import date
 import sys
-
 import colorama
-
 import shared
+
+
+if shared.LANG == 'PT':
+    WRONG_ARG = 'Erro: argumento incorreto '
+else:
+    WRONG_ARG = 'Err: incorrect argument '
 
 
 def print_state(childs, last_upd):
@@ -45,7 +48,6 @@ def man_upd(argv, childs, last_upd):
         try:
             days = int(days)
         except ValueError:  # as err:
-        #except ValueError:  # , err:
             arg_nok = arg
             args_ok = False
             break
@@ -77,7 +79,7 @@ def man_upd(argv, childs, last_upd):
         shared.update_file(childs, last_upd)
         print_state(childs, last_upd)
     else:
-        print(colorama.Fore.RED + 'Erro: argumento incorreto ' +
+        print(colorama.Fore.RED + WRONG_ARG +
               arg_nok + '\n')
         print(colorama.Fore.RESET + shared.usage())
 
@@ -109,3 +111,9 @@ def start(argv):
         man_upd(argv, childs, last_upd)
 
     sys.exit(0)  # ToDo: other return codes
+
+
+if __name__ == '__main__':
+    #import doctest
+    #doctest.testmod(verbose=True)
+    pass

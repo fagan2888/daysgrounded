@@ -6,22 +6,27 @@
 # Python 3 compatibility
 from __future__ import (absolute_import, division, print_function,
                         unicode_literals)
-
 from datetime import date
 import sys
 from os import path
 import pickle
 from pkg_resources import resource_filename
-
 import __init__ as globalcfg
 
+
+LANG = globalcfg.LANG
+
+if LANG == 'PT':
+    VERSION = ' versão '
+else:
+    VERSION = ' version '
 
 # set correct path to all data files
 try:
     # DATA_PATH = X:\PyhtonXX\Lib\site-packages\daysgrounded
     DATA_PATH = resource_filename(__name__, globalcfg.USAGE_FILE)
     DATA_PATH = DATA_PATH.replace(globalcfg.USAGE_FILE, '')
-except:
+except:  # ToDo: find what exception happens here
     # if current module is frozen, use library.zip path
     # DATA_PATH = exe location
     if hasattr(sys, 'frozen'):
@@ -47,13 +52,13 @@ def update_file(childs, last_upd):
 
     The log file creates an history to be used in the future.
     """
-    with open(DATA_FILE, 'wb') as f_out:
-        pickle.dump(childs, f_out)
-        pickle.dump(last_upd, f_out)
-        ##pickle.dump([childs, last_upd], f_out)
+    with open(DATA_FILE, 'wb') as file_:
+        pickle.dump(childs, file_)
+        pickle.dump(last_upd, file_)
+        ##pickle.dump([childs, last_upd], f)
     if LOG:
-        with open(LOG_FILE, 'ab') as f_out:
-            pickle.dump([childs, last_upd], f_out)
+        with open(LOG_FILE, 'ab') as file_:
+            pickle.dump([childs, last_upd], file_)
 
 
 def create_file():
@@ -67,25 +72,25 @@ def create_file():
 
 def read_file():
     """Reads and returns childs and last_upd from the data file."""
-    with open(DATA_FILE, 'rb') as f_in:
-        childs = pickle.load(f_in)
-        last_upd = pickle.load(f_in)
-        ##[childs, last_upd] = pickle.load(f_in)
+    with open(DATA_FILE, 'rb') as file_:
+        childs = pickle.load(file_)
+        last_upd = pickle.load(file_)
+        ##[childs, last_upd] = pickle.load(f)
     return childs, last_upd
 
 
 def usage():
     """Returns usage text, read from a file."""
-    with open(USAGE_FILE) as f_in:
-        return f_in.read()
+    with open(USAGE_FILE) as file_:
+        return file_.read()
 
 
 def banner():
     """Returns banner text."""
-    banner_txt = ('\n' + globalcfg.NAME + ' version ' + globalcfg.VERSION +
+    banner_txt = ('\n' + globalcfg.NAME + VERSION + globalcfg.VERSION +
                   ', ' + globalcfg.COPYRIGHT + '\n')
-    with open(BANNER_FILE) as f_in:
-        return banner_txt + f_in.read()
+    with open(BANNER_FILE) as file_:
+        return banner_txt + file_.read()
 
 
 def version():
@@ -95,8 +100,8 @@ def version():
 
 def license_():
     """Returns license text, read from a file."""
-    with open(LICENSE_FILE) as f_in:
-        return f_in.read()
+    with open(LICENSE_FILE) as file_:
+        return file_.read()
 
 
 def auto_upd_datafile(childs, last_upd):
@@ -117,3 +122,9 @@ def open_create_datafile():
     else:
         childs, last_upd = create_file()
     return childs, last_upd
+
+
+if __name__ == '__main__':
+    #import doctest
+    #doctest.testmod(verbose=True)
+    pass

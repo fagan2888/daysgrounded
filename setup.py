@@ -24,15 +24,15 @@ ENTRY_POINTS = {'console_scripts': ['daysgrounded=daysgrounded.__main__:main'],
                 }
 
 PKG_DATA = dict(daysgrounded=DATA_FILES)
-#PKG_DATA = {'': ['*.txt', '*.rst'], 'technical_indicators': ['*.txt'],
-#            'technical_indicators.data': ['*.pkl']}
+##PKG_DATA = {'': ['*.txt', '*.rst'], 'technical_indicators': ['*.txt'],
+##            'technical_indicators.data': ['*.pkl']}
 
 REQUIREMENTS_FILE = 'requirements.txt'
 REQUIREMENTS = ''
 if path.isfile(REQUIREMENTS_FILE):  # if file exists
     with open(REQUIREMENTS_FILE) as f:
         REQUIREMENTS = f.read()
-        #REQUIREMENTS = f.read().splitlines()
+        ##REQUIREMENTS = f.read().splitlines()
 
 # if not cleared they are added to bdist_egg root
 if sys.argv[1] and str.lower(sys.argv[1]) != 'py2exe':
@@ -51,7 +51,7 @@ setup(name=NAME,
       classifiers=CLASSIFIERS,
 
       packages=find_packages(),
-      #packages=find_packages(exclude=['tests*']),
+      ##packages=find_packages(exclude=['tests*']),
 
       # only used if find_packages() does not work
       #packages=PACKAGES,
@@ -72,7 +72,7 @@ setup(name=NAME,
       package_data=PKG_DATA,
 
       zip_safe=True,
-      
+
       # py2exe config
       #console=[SCRIPT],
       #data_files=DATA_FILES_PY2EXE,

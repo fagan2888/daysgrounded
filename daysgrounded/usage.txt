@@ -1,11 +1,11 @@
-    uso: daysgrounded [-opção | criança+/-dias...]
+    usage: daysgrounded [-option | child+/-days...]
 
-    argumentos opcionais:
-      -h, --help            mostra esta ajuda e sai
-      -a, --auto            atualização auto baseada na data
-      -v, --version         mostra versão
-      -l, --license         mostra licença
-      criança+/-dias        ex. t+1 s-1
+    optional arguments:
+      -h, --help            show this help message and exit
+      -a, --auto            auto update based on date
+      -v, --version         show version
+      -l, --license         shows license
+      child+/-days          eg. t+1 s-1
 
-    Sem argumentos inicia o gui.
-    Máximo de 99 dias.
+    No argument starts gui (graphical user interface).
+    Maximum of 99 days.

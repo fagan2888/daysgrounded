@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>daysgrounded.cli &mdash; daysgrounded 0.0.17 documentation</title>
+    <title>daysgrounded.cli &mdash; daysgrounded 0.0.18 documentation</title>
     
     <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
-        VERSION:     '0.0.17',
+        VERSION:     '0.0.18',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -23,7 +23,7 @@
     <script type="text/javascript" src="../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
-    <link rel="top" title="daysgrounded 0.0.17 documentation" href="../../index.html" />
+    <link rel="top" title="daysgrounded 0.0.18 documentation" href="../../index.html" />
     <link rel="up" title="Module code" href="../index.html" /> 
   </head>
   <body>
@@ -36,7 +36,7 @@
         <li class="right" >
           <a href="../../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li><a href="../../index.html">daysgrounded 0.0.17 documentation</a> &raquo;</li>
+        <li><a href="../../index.html">daysgrounded 0.0.18 documentation</a> &raquo;</li>
           <li><a href="../index.html" accesskey="U">Module code</a> &raquo;</li> 
       </ul>
     </div>  
@@ -55,13 +55,16 @@
 <span class="c"># Python 3 compatibility</span>
 <span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="p">(</span><span class="n">absolute_import</span><span class="p">,</span> <span class="n">division</span><span class="p">,</span> <span class="n">print_function</span><span class="p">,</span>
                         <span class="n">unicode_literals</span><span class="p">)</span>
-
 <span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">date</span>
 <span class="kn">import</span> <span class="nn">sys</span>
-
 <span class="kn">import</span> <span class="nn">colorama</span>
-
 <span class="kn">import</span> <span class="nn">shared</span>
+
+
+<span class="k">if</span> <span class="n">shared</span><span class="o">.</span><span class="n">LANG</span> <span class="o">==</span> <span class="s">&#39;PT&#39;</span><span class="p">:</span>
+    <span class="n">WRONG_ARG</span> <span class="o">=</span> <span class="s">&#39;Erro: argumento incorreto &#39;</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="n">WRONG_ARG</span> <span class="o">=</span> <span class="s">&#39;Err: incorrect argument &#39;</span>
 
 
 <div class="viewcode-block" id="print_state"><a class="viewcode-back" href="../../reference.html#daysgrounded.cli.print_state">[docs]</a><span class="k">def</span> <span class="nf">print_state</span><span class="p">(</span><span class="n">childs</span><span class="p">,</span> <span class="n">last_upd</span><span class="p">):</span>
@@ -94,7 +97,6 @@
         <span class="k">try</span><span class="p">:</span>
             <span class="n">days</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">days</span><span class="p">)</span>
         <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>  <span class="c"># as err:</span>
-        <span class="c">#except ValueError:  # , err:</span>
             <span class="n">arg_nok</span> <span class="o">=</span> <span class="n">arg</span>
             <span class="n">args_ok</span> <span class="o">=</span> <span class="bp">False</span>
             <span class="k">break</span>
@@ -126,7 +128,7 @@
         <span class="n">shared</span><span class="o">.</span><span class="n">update_file</span><span class="p">(</span><span class="n">childs</span><span class="p">,</span> <span class="n">last_upd</span><span class="p">)</span>
         <span class="n">print_state</span><span class="p">(</span><span class="n">childs</span><span class="p">,</span> <span class="n">last_upd</span><span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
-        <span class="k">print</span><span class="p">(</span><span class="n">colorama</span><span class="o">.</span><span class="n">Fore</span><span class="o">.</span><span class="n">RED</span> <span class="o">+</span> <span class="s">&#39;Erro: argumento incorreto &#39;</span> <span class="o">+</span>
+        <span class="k">print</span><span class="p">(</span><span class="n">colorama</span><span class="o">.</span><span class="n">Fore</span><span class="o">.</span><span class="n">RED</span> <span class="o">+</span> <span class="n">WRONG_ARG</span> <span class="o">+</span>
               <span class="n">arg_nok</span> <span class="o">+</span> <span class="s">&#39;</span><span class="se">\n</span><span class="s">&#39;</span><span class="p">)</span>
         <span class="k">print</span><span class="p">(</span><span class="n">colorama</span><span class="o">.</span><span class="n">Fore</span><span class="o">.</span><span class="n">RESET</span> <span class="o">+</span> <span class="n">shared</span><span class="o">.</span><span class="n">usage</span><span class="p">())</span>
 
@@ -157,7 +159,13 @@
     <span class="k">else</span><span class="p">:</span>
         <span class="n">man_upd</span><span class="p">(</span><span class="n">argv</span><span class="p">,</span> <span class="n">childs</span><span class="p">,</span> <span class="n">last_upd</span><span class="p">)</span>
 
-    <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>  <span class="c"># ToDo: other return codes</span></div>
+    <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>  <span class="c"># ToDo: other return codes</span>
+
+</div>
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="c">#import doctest</span>
+    <span class="c">#doctest.testmod(verbose=True)</span>
+    <span class="k">pass</span>
 </pre></div>
 
           </div>
@@ -191,7 +199,7 @@
         <li class="right" >
           <a href="../../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li><a href="../../index.html">daysgrounded 0.0.17 documentation</a> &raquo;</li>
+        <li><a href="../../index.html">daysgrounded 0.0.18 documentation</a> &raquo;</li>
           <li><a href="../index.html" >Module code</a> &raquo;</li> 
       </ul>
     </div>

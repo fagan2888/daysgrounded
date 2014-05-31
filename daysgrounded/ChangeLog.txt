@@ -1,3 +1,10 @@
+0.0.18 2014-05-31 ::
+
+    Cleanup several files.
+    Fill some Docstrings.
+    Translation to English.
+
+
 0.0.17 2014-05-31 ::
 
     Added zip_safe to setup.py.
