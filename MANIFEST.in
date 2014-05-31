@@ -1,5 +1,5 @@
-include *.txt
-include daysgrounded\banner.txt
-include daysgrounded\LICENSE.txt
-include daysgrounded\usage.txt
-exclude daysgrounded\*.pkl
+include *.txt *.rst *.py *.bat
+recursive-include doc *
+recursive-include daysgrounded *.txt
+recursive-include daysgrounded/doc *
+exclude daysgrounded *.pkl

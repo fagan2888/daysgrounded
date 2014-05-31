@@ -20,10 +20,9 @@ else:
 
 import shared
 
-prev_child = None
-child = None
-childs = None
-last_upd = None
+
+prev_child = child = childs = last_upd = None
+
 
 def start():
     """Print banner, read/create data & log file and start gui."""
@@ -45,16 +44,16 @@ def start():
 
     def days_scale_chg(*args):
         """Blablabla."""
-        days_var.set(int(float(days_var.get()))) # fix increment to integer
+        days_var.set(int(float(days_var.get())))  # fix increment to integer
 
     def childs_combo_chg(*args):
         """Blablabla."""
-        global child
-        global prev_child
+        global child, prev_child
 
         try:
             int(days_var.get())
-        except ValueError:
+        except ValueError:  # as err:
+        #except ValueError:  # , err:
             days_var.set(0)
 
         if 0 <= int(days_var.get()) <= shared.MAX_DAYS:
@@ -64,8 +63,8 @@ def start():
         else:
             childs_combo.set(prev_child)
             tk_msg_box.showwarning('AVISO',
-                                   'O número de dias tem que estar entre 0 e ' +
-                                   shared.MAX_DAYS_STR)
+                                   'O número de dias tem que estar entre ' +
+                                   '0 e ' + shared.MAX_DAYS_STR)
 
     def set_upd_btn(upd):
         """Blablabla."""
@@ -86,14 +85,14 @@ def start():
             last_upd_var.set(value=str(last_upd))
         else:
             tk_msg_box.showwarning('AVISO',
-                                   'O número de dias tem que estar entre 0 e ' +
-                                   shared.MAX_DAYS_STR)
+                                   'O número de dias tem que estar entre ' +
+                                   '0 e ' + shared.MAX_DAYS_STR)
 
     def confirm_exit():
         """Blablabla."""
         if tk_msg_box.askokcancel("Sair", "Tem a certeza que pretende sair?"):
             root.destroy()
-            sys.exit(0) # ToDo: other return codes
+            sys.exit(0)  # ToDo: other return codes
 
     def digits_only(up_down, idx, value, prev_val, char, val_type, source,
                     widget):
@@ -119,7 +118,6 @@ def start():
     def show_help(*args):
         """Blablabla."""
         tk_msg_box.showinfo('Ajuda', shared.usage())
-
 
     print(shared.banner())
     childs, last_upd = shared.open_create_datafile()
@@ -165,10 +163,10 @@ def start():
     helpmenu.add_command(label="Sobre", underline=0, state='disabled')
 
     # ToDo: log menu item
-##        filemenu.add_separator()
-##        check = StringVar(value=1)
-##        filemenu.add_checkbutton(label='Log', variable=check, onvalue=1,
-##                                 offvalue=0)
+    ## filemenu.add_separator()
+    ## check = StringVar(value=1)
+    ## filemenu.add_checkbutton(label='Log', variable=check, onvalue=1,
+    ##                          offvalue=0)
 
     frame = tk_ttk.Frame(win, padding='3 3 3 3')
     frame.grid(column=0, row=0, sticky='WNES')
@@ -195,7 +193,7 @@ def start():
 
     # 2nd row
     tk_ttk.Label(frame, textvariable=child_lbl).grid(column=1, row=2)
-    childs_combo = tk_ttk.Combobox(frame, state='readonly', #width=10,
+    childs_combo = tk_ttk.Combobox(frame, state='readonly',  # width=10,
                                    values=list(childs.keys()))
     childs_combo.grid(column=2, row=2)
     childs_combo.set(child)
@@ -208,7 +206,7 @@ def start():
     days_entry = tk_ttk.Entry(frame, width=len(shared.MAX_DAYS_STR) + 1,
                               justify=tk.RIGHT, textvariable=days_var,
                               validate='key', validatecommand=vcmd)
-    days_entry.grid(column=3, row=2) #, sticky='WE') for expanding
+    days_entry.grid(column=3, row=2)  # , sticky='WE')  # for expanding
     tk.Spinbox(frame, from_=0, to=shared.MAX_DAYS,
                width=len(shared.MAX_DAYS_STR) + 1, justify=tk.RIGHT,
                textvariable=days_var, validate='key',

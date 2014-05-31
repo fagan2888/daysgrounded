@@ -13,13 +13,15 @@ from __future__ import (absolute_import, division, print_function,
                         unicode_literals)
 
 import sys
-import os
+#import os
 
 import cli
 import gui
 
+
 def main():
-    if sys.argv[1:]: # any args?
+    """Start CLI or GUI"""
+    if sys.argv[1:]:  # any args?
         cli.start(sys.argv[1:])
     else:
         gui.start()

@@ -1,17 +1,5 @@
-daysgrounded
-============
-
-*daysgrounded* allows you to manage your kid's grounded days (simple app for trying Python programming and testing procedures).
-
-Although the code is OS independent, I'm only able to test it in console (Windows Cmd) and Windows GUI.
-
-You shouldn't use this because it's just a fake app for allowing me to try Python programming and testing procedures.
-
-**Features:**
-
-* Saves a log file with all changes.
-* Saves grounded days total per child and last update date.
-* Allows changes in CLI and GUI (this last one has different widgets for the same function).
+Tutorial
+========
 
 Installation
 ------------

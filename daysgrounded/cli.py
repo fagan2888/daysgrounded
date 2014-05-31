@@ -14,17 +14,23 @@ import colorama
 
 import shared
 
+
 def print_state(childs, last_upd):
     """Prints current state for each child."""
     for child in childs:
         print(child, childs[child])
     print(str(last_upd))
 
+
 def man_upd(argv, childs, last_upd):
-    """Manual update based on args.
+    """
+    Manual update based on args.
 
     First it checks all args and only if all are correct are they processed.
     """
+    arg_nok = ''
+    args_ok = False
+
     # check args
     for arg in argv:
         if '-' in arg:
@@ -32,12 +38,15 @@ def man_upd(argv, childs, last_upd):
         elif '+' in arg:
             child, days = str.lower(arg).split('+')
         else:
+            arg_nok = arg
             args_ok = False
             break
 
         try:
             days = int(days)
-        except ValueError:
+        except ValueError:  # as err:
+        #except ValueError:  # , err:
+            arg_nok = arg
             args_ok = False
             break
 
@@ -45,10 +54,11 @@ def man_upd(argv, childs, last_upd):
            (-shared.MAX_DAYS <= days <= shared.MAX_DAYS)):
             args_ok = True
         else:
+            arg_nok = arg
             args_ok = False
             break
 
-    if args_ok: # process args
+    if args_ok:  # process args
         print_state(childs, last_upd)
         for arg in argv:
             if '-' in arg:
@@ -67,14 +77,17 @@ def man_upd(argv, childs, last_upd):
         shared.update_file(childs, last_upd)
         print_state(childs, last_upd)
     else:
-        print(colorama.Fore.RED + 'Erro: argumento incorreto ' + arg + '\n')
+        print(colorama.Fore.RED + 'Erro: argumento incorreto ' +
+              arg_nok + '\n')
         print(colorama.Fore.RESET + shared.usage())
+
 
 def auto_upd(childs, last_upd):
     """Automatic update based on current date vs last update date."""
     print_state(childs, last_upd)
     last_upd = shared.auto_upd_datafile(childs, last_upd)
     print_state(childs, last_upd)
+
 
 def start(argv):
     """Print banner, read/create data & log file and process args."""
@@ -95,4 +108,4 @@ def start(argv):
     else:
         man_upd(argv, childs, last_upd)
 
-    sys.exit(0) # ToDo: other return codes
+    sys.exit(0)  # ToDo: other return codes
