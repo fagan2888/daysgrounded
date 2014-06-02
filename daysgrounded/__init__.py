@@ -13,12 +13,14 @@ from __future__ import (absolute_import, division, print_function,
 import sys
 from os import path
 import locale
+import glob
 
 
 sys.path.insert(1, path.dirname(__file__))  # add to PYTHONPATH
 
 AUTHOR = 'Joao Matos'
 EMAIL = 'jcrmatos@gmail.com'
+
 COPYRIGHT = 'Copyright 2014 ' + AUTHOR
 
 NAME = 'daysgrounded'
@@ -71,13 +73,15 @@ AUTHORS_FILE = 'AUTHORS.txt'
 DATA_FILES = [USAGE_FILE, LICENSE_FILE, BANNER_FILE, README_FILE, AUTHORS_FILE,
               CHANGE_LOG_FILE]
 
-DATA_FILES_PY2EXE = [('', [NAME + '/' + USAGE_FILE]),
-                     ('', [NAME + '/' + BANNER_FILE]),
-                     ('', [NAME + '/' + LICENSE_FILE]),
-                     ('', [NAME + '/' + README_FILE]),
-                     ('', [NAME + '/' + AUTHORS_FILE]),
-                     ('', [NAME + '/' + CHANGE_LOG_FILE])]
+#DATA_FILES_PY2EXE = [('', [NAME + '/' + USAGE_FILE]),
+#                     ('', [NAME + '/' + BANNER_FILE]),
+#                     ('', [NAME + '/' + LICENSE_FILE]),
+#                     ('', [NAME + '/' + README_FILE]),
+#                     ('', [NAME + '/' + AUTHORS_FILE]),
+#                     ('', [NAME + '/' + CHANGE_LOG_FILE])]
+DATA_FILES_PY2EXE = glob.glob(NAME + '/' + '*.txt')
 
-DATA_FILES_CXF = [NAME + '/' + USAGE_FILE, NAME + '/' + BANNER_FILE,
-                  NAME + '/' + LICENSE_FILE, NAME + '/' + README_FILE,
-                  NAME + '/' + AUTHORS_FILE, NAME + '/' + CHANGE_LOG_FILE]
+#DATA_FILES_CXF = [NAME + '/' + USAGE_FILE, NAME + '/' + BANNER_FILE,
+#                  NAME + '/' + LICENSE_FILE, NAME + '/' + README_FILE,
+#                  NAME + '/' + AUTHORS_FILE, NAME + '/' + CHANGE_LOG_FILE]
+DATA_FILES_CXF = glob.glob(NAME + '/' + '*.txt')

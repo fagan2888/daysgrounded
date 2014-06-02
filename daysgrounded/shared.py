@@ -82,7 +82,7 @@ def read_file():
 def usage():
     """Returns usage text, read from a file."""
     with open(USAGE_FILE) as file_:
-        return file_.read()
+        return file_.read().decode('cp1252')
 
 
 def banner():
@@ -90,7 +90,7 @@ def banner():
     banner_txt = ('\n' + globalcfg.NAME + VERSION + globalcfg.VERSION +
                   ', ' + globalcfg.COPYRIGHT + '\n')
     with open(BANNER_FILE) as file_:
-        return banner_txt + file_.read()
+        return banner_txt + file_.read().decode('cp1252')
 
 
 def version():
@@ -101,7 +101,7 @@ def version():
 def license_():
     """Returns license text, read from a file."""
     with open(LICENSE_FILE) as file_:
-        return file_.read()
+        return file_.read().decode('cp1252')
 
 
 def auto_upd_datafile(childs, last_upd):

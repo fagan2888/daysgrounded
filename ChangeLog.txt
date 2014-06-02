@@ -1,3 +1,14 @@
+0.0.19 2014-06-02 ::
+
+    Added end user documentation to .gitignore.
+    Added option PROJ_TYPE to build.bat to distinguish between modules and
+    applications.
+    Added pythonhosted.org files to MANIFEST.in.
+    Changed __init__.py to use glob to select data files.
+    Changed shared.py to use .decode('cp1252') when reading text files.
+    Added options to py2exe config in setup.py.
+
+
 0.0.18 2014-05-31 ::
 
     Cleanup several files.

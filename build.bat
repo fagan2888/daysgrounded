@@ -9,6 +9,9 @@ echo *** Cleanup and update basic info files
 echo ***
 set PROJECT=daysgrounded
 
+rem PROJ_TYPE should be module (sdist only build) or anything else for sdist and binary builds
+set PROJ_TYPE=application
+
 python py_app_ver.py
 for /f "delims=" %%f in (py_ver.txt) do set PY_VER=%%f
 for /f "delims=" %%f in (app_ver.txt) do set APP_VER=%%f
@@ -65,13 +68,18 @@ cls
 
 if "%1"=="test" goto :TEST
 if "%1"=="pypi" goto :PYPI
+
+if %PROJ_TYPE%==module goto :BUILD
+
 if "%1"=="cxf" goto :CXF
 if "%1"=="py2exe" goto :PY2EXE
 
+:BUILD
 echo ***
 echo *** Build only
 echo ***
-python setup.py sdist bdist_egg bdist_wininst bdist_wheel
+if %PROJ_TYPE%==module python setup.py sdist
+if not %PROJ_TYPE%==module python setup.py sdist bdist_egg bdist_wininst bdist_wheel
 goto :EXIT
 
 :TEST
@@ -85,8 +93,8 @@ echo ***
 pause
 cls
 
-rem python setup.py sdist bdist_egg bdist_wininst bdist_wheel
-python setup.py sdist bdist_egg bdist_wininst bdist_wheel upload -r test
+if %PROJ_TYPE%==module python setup.py sdist upload -r test
+if not %PROJ_TYPE%==module python setup.py sdist bdist_egg bdist_wininst bdist_wheel upload -r test
 goto :EXIT
 
 :PYPI
@@ -100,8 +108,8 @@ echo ***
 pause
 cls
 
-rem python setup.py sdist bdist_egg bdist_wininst bdist_wheel
-python setup.py sdist bdist_egg bdist_wininst bdist_wheel upload -r pypi
+if %PROJ_TYPE%==module python setup.py sdist upload -r pypi
+if not %PROJ_TYPE%==module python setup.py sdist bdist_egg bdist_wininst bdist_wheel upload -r pypi
 goto :EXIT
 
 :CXF
@@ -130,3 +138,4 @@ set PATH=%OLDPATH%
 set OLDPATH=
 set PY_VER=
 set APP_VER=
+set PROJ_TYPE=

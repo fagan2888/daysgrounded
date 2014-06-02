@@ -1,5 +1,6 @@
 include *.txt *.rst *.py *.bat
-recursive-include doc *
-recursive-include daysgrounded *.txt
+include doc/*.rst doc/*.py
+include pythonhosted.org/*
+include daysgrounded/*.txt
+exclude daysgrounded/*.pkl
 recursive-include daysgrounded/doc *
-exclude daysgrounded *.pkl

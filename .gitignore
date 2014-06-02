@@ -202,6 +202,7 @@ var/
 sdist/
 develop-eggs/
 .installed.cfg
+daysgrounded/doc
 
 # virtualenv
 venv/
