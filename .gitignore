@@ -28,5 +28,4 @@ venv/
 .tox
 
 # project specific
-daysgrounded/doc/
 daysgrounded/__pycache__/

@@ -1,3 +1,18 @@
+0.0.25 2015-03-24 ::
+
+	Added new function to setup_utils.py to create pythonhosted.org/doc.zip.
+	Changed build.cmd to use it and remember the user to upload it to PyPI.
+	Added twine to build.cmd.
+	Added some comments with requirements for build.cmd.
+	build.cmd internal reorganization.
+
+
+0.0.23 2015-03-24 ::
+
+	Reverted the Sphinx theme to 'classic' because otherwise it does not build the html documentation.
+	Opened issue in RTD for them to update their system for the new name ('classic') of the old 'default' theme.
+
+	
 0.0.22 2015-03-24 ::
 
 	Reverted the Sphinx theme to the old 'default' because ReadTheDocs isn't compatible yet.

@@ -33,6 +33,7 @@ import os
 import sys
 ##import sysconfig
 import time
+import zipfile as zip
 
 # add modules_dir to PYTHONPATH so import appinfo works
 # this assumes that the current dir has the same name as the subdir where
@@ -77,12 +78,14 @@ def app_name():
 
 
 def app_ver():
-    """Write application version to text file."""
-    #with open(PROJECT + '/ChangeLog.rst') as file_:
-    #    app_ver = file_.readline().split()[0]
-    with open('app_ver.txt', 'w') as file_:
-        #file_.write(app_ver)
-        file_.write(appinfo.APP_VERSION)
+    """Write application version to text file if equal to ChangeLog.rst."""
+    with open(appinfo.APP_NAME + '/ChangeLog.rst') as file_:
+        changelog_app_ver = file_.readline().split()[0]
+    if changelog_app_ver == appinfo.APP_VERSION:
+        with open('app_ver.txt', 'w') as file_:
+            file_.write(appinfo.APP_VERSION)
+    else:
+        print('ChangeLog.rst and appinfo.py are not in sync.')
 
 
 def app_type():
@@ -118,6 +121,18 @@ def prep_rst2pdf():
 
     with open('doc/index.rst', 'w') as file_:
         file_.writelines(new_text)
+
+
+def create_doc_zip():
+    doc_path = appinfo.APP_NAME + '/doc'
+    with zip.ZipFile('pythonhosted.org/doc.zip', 'w') as archive:
+        for root, dirs, files in os.walk(doc_path):
+            for file_ in files:
+                if not '.pdf' in file_:
+                    pathname = os.path.join(root, file_)
+                    filename = pathname.replace(doc_path + os.sep, '')
+                    archive.write(pathname, filename)
+                    print(pathname, filename)
 
 
 ##def std_lib_modules():

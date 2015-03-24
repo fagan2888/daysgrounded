@@ -33,7 +33,7 @@ import glob
 
 
 APP_NAME = 'daysgrounded'
-APP_VERSION = '0.0.20'
+APP_VERSION = '0.0.25'
 AUTHOR = 'Joao Carlos Roseta Matos'
 COPYRIGHT = 'Copyright 2009-' + str(dt.date.today().year) + ' '  + AUTHOR
 
