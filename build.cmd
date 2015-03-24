@@ -40,8 +40,6 @@ copy /y %PROJECT%\README.rst . > nul
 
 if "%1"=="clean" goto :EXIT_NO_MSG
 
-python setup_utils.py sleep()
-
 if not exist test goto :DOC
 
 echo.
@@ -108,6 +106,8 @@ if "%1"=="cxf" goto :CXF
 if "%1"=="py2exe" goto :PY2EXE
 
 :BUILD
+python setup_utils.py sleep()
+
 echo.
 echo *** sdist build
 echo.

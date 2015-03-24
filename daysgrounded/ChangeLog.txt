@@ -1,3 +1,8 @@
+0.0.22 2015-03-24 ::
+
+	Reverted the Sphinx theme to the old 'default' because ReadTheDocs isn't compatible yet.
+
+
 0.0.21 2015-03-24 ::
 
 	Updated doc/*.rst and daysgrounded/__init__.py to solve Sphinx problem.
