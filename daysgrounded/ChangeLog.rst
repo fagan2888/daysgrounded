@@ -1,3 +1,8 @@
+0.0.26 2015-03-24 ::
+
+	Changed setup_utils.py to update copyright in doc/conf.py.
+
+	
 0.0.25 2015-03-24 ::
 
 	Added new function to setup_utils.py to create pythonhosted.org/doc.zip.

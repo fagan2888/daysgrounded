@@ -3,11 +3,11 @@ cls
 
 rem Usage:
 rem
-rem build
-rem build pypi
-rem build py2exe
-rem build clean
-rem build test
+rem build - builds sdist and bdist_wheel
+rem build pypi - uploads sdist and bdist_wheel to PyPI
+rem build py2exe - creates windows exe
+rem build clean - clears dirs and files to have a clean env
+rem build test - uploads sdist and bdist_wheel to test
 rem build cxf - not working for the moment
 rem
 rem Requires:
@@ -65,10 +65,6 @@ echo.
 rem python -m doctest -v test/test.rst
 rem python -m unittest discover -v -s test
 py.test --cov-report term-missing --cov %PROJECT% -v test/
-echo.
-echo *** End of DocTest/UnitTest
-echo.
-
 if %ERRORLEVEL%==0 goto :DOC
 goto :EXIT
 
@@ -120,7 +116,7 @@ if "%1"=="cxf" goto :CXF
 if "%1"=="py2exe" goto :PY2EXE
 
 :BUILD
-python setup_utils.py sleep()
+python setup_utils.py sleep(5)
 
 echo.
 echo *** sdist build
@@ -159,20 +155,13 @@ echo.
 echo.
 echo *** If there were filesystem errors (eg. directory not empty), try repeating the build up to 3 times. At least on my system that works.
 echo.
-
 goto :EXIT
 
 :TEST
 echo.
-echo *** TEST: Register, build and upload
+echo *** TEST: Register and upload
 echo.
 python setup.py register -r test
-echo.
-echo *** End register
-echo.
-pause
-cls
-
 twine upload -r test dist/*
 rem if %PROJ_TYPE%==module python setup.py sdist upload -r test
 rem if %PROJ_TYPE%==module goto :EXIT
@@ -182,15 +171,9 @@ goto :EXIT
 
 :PYPI
 echo.
-echo *** PyPI: Register, build and upload
+echo *** PyPI: Register and upload
 echo.
 python setup.py register -r pypi
-echo.
-echo *** End register
-echo.
-pause
-cls
-
 twine upload dist/*
 rem if %PROJ_TYPE%==module python setup.py sdist upload -r pypi
 rem if %PROJ_TYPE%==module goto :EXIT
@@ -198,7 +181,6 @@ rem rem python setup.py sdist bdist_egg bdist_wininst bdist_wheel upload -r pypi
 rem python setup.py sdist bdist_wheel upload -r pypi
 
 rem upload docs
-
 echo.
 echo *** Don't forget to upload the pythonhosted.org/doc.zip to PyPI
 echo.

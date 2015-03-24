@@ -27,6 +27,7 @@ from __future__ import print_function
 from __future__ import unicode_literals
 
 import codecs
+import datetime as dt
 import glob
 import os
 ##import pprint as pp
@@ -63,10 +64,28 @@ def update_copyright():
 
         with codecs.open(filename, 'w', encoding='utf8') as file_:
             file_.writelines(new_text)
-        # TODO copyright = u'2014-2015, Joao Carlos Roseta Matos' in doc/conf.py
+    
+    filename = 'doc/conf.py'
+    if os.path.isfile(filename):
+        with codecs.open(filename, encoding='utf8') as file_:
+            text = file_.readlines()
+
+            new_text = ''
+            found = False
+            for line in text:
+                if not found and "copyright = u'2009-" in line:
+                    new_text += ("copyright = u'2009-" +
+                                 str(dt.date.today().year) + ', '  +
+                                 appinfo.AUTHOR + "'" + os.linesep)
+                    found = True
+                else:
+                    new_text += line
+
+            with codecs.open(filename, 'w', encoding='utf8') as file_:
+                file_.writelines(new_text)        
 
 
-def sleep(seconds=3):
+def sleep(seconds=5):
     """Pause for specified time."""
     time.sleep(seconds)
 
