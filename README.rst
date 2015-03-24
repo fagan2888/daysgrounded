@@ -42,20 +42,21 @@ Options
       -l, --license         shows license
       child+/-days          eg. t+1 s-1
 
-    No argument starts gui
+    No argument starts gui (graphical user interface).
+    Maximum of 99 days.
 
 Resources
 ---------
 
-* `Repository <https://github.com/jcrmatos/DaysGrounded>`_
+* `Repository <https://github.com/jcrmatos/daysgrounded>`_
 
 Contributing
 ------------
 
 1. Fork the `repository`_ on GitHub.
 2. Make a branch of master and commit your changes to it.
-3. Ensure that your name is added to the end of the AUTHORS.txt file using the format:
-   ``Name <email@domain.com> (url)``, where the ``(url)`` portion is optional.
+3. Ensure that your name is added to the end of the AUTHORS.rst file using the format:
+   ``Name <email@domain.com>``
 4. Submit a Pull Request to the master branch on GitHub.
 
-.. _repository: https://github.com/jcrmatos/DaysGrounded
+.. _repository: https://github.com/jcrmatos/daysgrounded

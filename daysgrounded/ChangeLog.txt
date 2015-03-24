@@ -1,3 +1,20 @@
+0.0.20 2015-03-24 ::
+
+    General code cleanup.
+	Cleared __input__.py.
+	Create appinfo.py with basic application information to be used by the application, setup.py and setup_utils.py.
+	Compatibility testing with Py3 and necessary changes. All good now.
+	Renamed build.bat to build.cmd.
+	Improved build.cmd.
+	Improved setup.py to be universal.
+	Created setup_utils.py to aid build.cmd.
+	Created utils.py.
+	Added copyright to all source code.
+	Updated MANIFEST.in.
+	and many more.
+	BUG: Sphinx docs stopped working.
+
+
 0.0.19 2014-06-02 ::
 
     Added end user documentation to .gitignore.

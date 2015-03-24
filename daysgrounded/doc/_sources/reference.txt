@@ -7,10 +7,10 @@ __init__.py
 .. automodule:: daysgrounded.__init__
    :members:
 
-__main__.py
------------
+daysgrounded.py
+---------------
 
-.. automodule:: daysgrounded.__main__
+.. automodule:: daysgrounded.daysgrounded
    :members:
 
 cli.py

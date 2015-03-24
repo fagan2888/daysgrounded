@@ -1,71 +1,75 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-"""Shared constants and funtions."""
+"""
+Shared constants and functions.
+
+Copyright 2009-2015 Joao Carlos Roseta Matos
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
+"""
 
 # Python 3 compatibility
-from __future__ import (absolute_import, division, print_function,
-                        unicode_literals)
-from datetime import date
-import sys
-from os import path
-import pickle
-from pkg_resources import resource_filename
-import __init__ as globalcfg
+from __future__ import absolute_import
+from __future__ import division
+from __future__ import print_function
+from __future__ import unicode_literals
+
+import datetime as dt
+import pickle as pkl
+import os
+
+import appinfo
+import localization as lcl
+import utils
 
 
-LANG = globalcfg.LANG
+LICENSE_FILE = 'COPYING.txt'
 
-if LANG == 'PT':
-    VERSION = ' versão '
+if utils.LANG == 'PT':
+    BANNER_FILE = 'banner_pt.txt'
+    USAGE_FILE = 'usage_pt.txt'
 else:
-    VERSION = ' version '
+    BANNER_FILE = 'banner.txt'
+    USAGE_FILE = 'usage.txt'
 
-# set correct path to all data files
-try:
-    # DATA_PATH = X:\PyhtonXX\Lib\site-packages\daysgrounded
-    DATA_PATH = resource_filename(__name__, globalcfg.USAGE_FILE)
-    DATA_PATH = DATA_PATH.replace(globalcfg.USAGE_FILE, '')
-except:  # ToDo: find what exception happens here
-    # if current module is frozen, use library.zip path
-    # DATA_PATH = exe location
-    if hasattr(sys, 'frozen'):
-        ##DATA_PATH = sys.prefix
-        ##DATA_PATH.strip('/')
-        DATA_PATH = path.dirname(sys.executable)
-        DATA_PATH += '/'
+DATA_FILE = utils.DATA_PATH + '/daysgrounded.pkl'
 
-USAGE_FILE = DATA_PATH + globalcfg.USAGE_FILE
-BANNER_FILE = DATA_PATH + globalcfg.BANNER_FILE
-LICENSE_FILE = DATA_PATH + globalcfg.LICENSE_FILE
+LOG = False
+LOG_FILE = utils.DATA_PATH + '/daysgrounded_log.pkl'
 
-DATA_FILE = DATA_PATH + 'daysgrounded.pkl'
-LOG = True
-LOG_FILE = DATA_PATH + 'daysgrounded_log.pkl'
 MAX_DAYS = 99
 MAX_DAYS_STR = str(MAX_DAYS)
 
 
 def update_file(childs, last_upd):
-    """
-    Update data file and log file.
+    """Update data file and log file.
 
     The log file creates an history to be used in the future.
     """
     with open(DATA_FILE, 'wb') as file_:
-        pickle.dump(childs, file_)
-        pickle.dump(last_upd, file_)
-        ##pickle.dump([childs, last_upd], f)
+        pkl.dump((childs, last_upd), file_)
     if LOG:
         with open(LOG_FILE, 'ab') as file_:
-            pickle.dump([childs, last_upd], file_)
+            pkl.dump((childs, last_upd), file_)
 
 
 def create_file():
     """Create new data file and log file."""
     # use lower case letters or names
     childs = {'t': 0, 's': 0}
-    last_upd = date.today()
+    last_upd = dt.date.today()
     update_file(childs, last_upd)
     return childs, last_upd
 
@@ -73,40 +77,49 @@ def create_file():
 def read_file():
     """Reads and returns childs and last_upd from the data file."""
     with open(DATA_FILE, 'rb') as file_:
-        childs = pickle.load(file_)
-        last_upd = pickle.load(file_)
-        ##[childs, last_upd] = pickle.load(f)
+        (childs, last_upd) = pkl.load(file_)
     return childs, last_upd
 
 
 def usage():
     """Returns usage text, read from a file."""
     with open(USAGE_FILE) as file_:
-        return file_.read().decode('cp1252')
+        if utils.PY < 3:
+            text = file_.read().decode('latin_1')
+        else:
+            text = file_.read()
+    return text
 
 
 def banner():
     """Returns banner text."""
-    banner_txt = ('\n' + globalcfg.NAME + VERSION + globalcfg.VERSION +
-                  ', ' + globalcfg.COPYRIGHT + '\n')
+    banner_txt = ('\n' + appinfo.APP_NAME + lcl.VERSION_WITH_SPACES +
+                  appinfo.APP_VERSION +  ', ' + appinfo.COPYRIGHT + '\n')
     with open(BANNER_FILE) as file_:
-        return banner_txt + file_.read().decode('cp1252')
-
+        if utils.PY < 3:
+            banner_txt += file_.read().decode('latin_1')
+        else:
+            banner_txt += file_.read()
+    return banner_txt
 
 def version():
     """Returns version."""
-    return globalcfg.VERSION
+    return appinfo.APP_VERSION
 
 
 def license_():
     """Returns license text, read from a file."""
     with open(LICENSE_FILE) as file_:
-        return file_.read().decode('cp1252')
+        if utils.PY < 3:
+            text = file_.read().decode('latin_1')
+        else:
+            text = file_.read()
+    return text
 
 
 def auto_upd_datafile(childs, last_upd):
     """Automatic update based on current date vs last update date."""
-    right_now = date.today()
+    right_now = dt.date.today()
     days_to_remove = (right_now - last_upd).days  # convert to days and assign
     for child in childs:
         childs[child] -= days_to_remove
@@ -117,7 +130,7 @@ def auto_upd_datafile(childs, last_upd):
 
 def open_create_datafile():
     """Opens datafile if it exists, otherwise creates it."""
-    if path.isfile(DATA_FILE):  # if file exists
+    if os.path.isfile(DATA_FILE):  # if file exists
         childs, last_upd = read_file()
     else:
         childs, last_upd = create_file()

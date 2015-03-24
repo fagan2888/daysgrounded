@@ -50,7 +50,7 @@ master_doc = 'index'
 
 # General information about the project.
 project = u'daysgrounded'
-copyright = u'2014, Joao Matos'
+copyright = u'2014-2015, Joao Carlos Roseta Matos'
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
@@ -58,7 +58,7 @@ copyright = u'2014, Joao Matos'
 #
 # The short X.Y version.
 #version = '0.0.16'
-version = open('../ChangeLog.rst').readline().split()[0]
+version = open(u'../daysgrounded/ChangeLog.rst').readline().split()[0]
 
 # The full version, including alpha/beta/rc tags.
 #release = '0.0.16'
@@ -206,7 +206,7 @@ latex_elements = {
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
   ('index', 'daysgrounded.tex', u'daysgrounded Documentation',
-   u'Joao Matos', 'manual'),
+   u'Joao Carlos Roseta Matos', 'manual'),
 ]
 
 # The name of an image file (relative to this directory) to place at the top of
@@ -236,7 +236,7 @@ latex_documents = [
 # (source start file, name, description, authors, manual section).
 man_pages = [
     ('index', 'daysgrounded', u'daysgrounded Documentation',
-     [u'Joao Matos'], 1)
+     [u'Joao Carlos Roseta Matos'], 1)
 ]
 
 # If true, show URL addresses after external links.
@@ -250,7 +250,7 @@ man_pages = [
 #  dir menu entry, description, category)
 texinfo_documents = [
   ('index', 'daysgrounded', u'daysgrounded Documentation',
-   u'Joao Matos', 'daysgrounded', 'One line description of project.',
+   u'Joao Carlos Roseta Matos', 'daysgrounded', 'One line description of project.',
    'Miscellaneous'),
 ]
 

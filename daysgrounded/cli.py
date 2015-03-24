@@ -1,21 +1,38 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-"""Processes command line arguments and updates child's records."""
+"""
+Processes command line arguments and updates child's records.
+
+Copyright 2009-2015 Joao Carlos Roseta Matos
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
+"""
 
 # Python 3 compatibility
-from __future__ import (absolute_import, division, print_function,
-                        unicode_literals)
-from datetime import date
+from __future__ import absolute_import
+from __future__ import division
+from __future__ import print_function
+from __future__ import unicode_literals
+
+import datetime as dt
 import sys
+
 import colorama
-import shared
 
-
-if shared.LANG == 'PT':
-    WRONG_ARG = 'Erro: argumento incorreto '
-else:
-    WRONG_ARG = 'Err: incorrect argument '
+import localization as lcl
+import shared as shrd
 
 
 def print_state(childs, last_upd):
@@ -26,8 +43,7 @@ def print_state(childs, last_upd):
 
 
 def man_upd(argv, childs, last_upd):
-    """
-    Manual update based on args.
+    """Manual update based on args.
 
     First it checks all args and only if all are correct are they processed.
     """
@@ -53,7 +69,7 @@ def man_upd(argv, childs, last_upd):
             break
 
         if ((child in childs) and
-           (-shared.MAX_DAYS <= days <= shared.MAX_DAYS)):
+           (-shrd.MAX_DAYS <= days <= shrd.MAX_DAYS)):
             args_ok = True
         else:
             arg_nok = arg
@@ -72,22 +88,21 @@ def man_upd(argv, childs, last_upd):
 
             childs[child] += days
             if childs[child] > 0:
-                childs[child] = min(shared.MAX_DAYS, childs[child])
+                childs[child] = min(shrd.MAX_DAYS, childs[child])
             else:
                 childs[child] = max(0, childs[child])
-        last_upd = date.today()
-        shared.update_file(childs, last_upd)
+        last_upd = dt.date.today()
+        shrd.update_file(childs, last_upd)
         print_state(childs, last_upd)
     else:
-        print(colorama.Fore.RED + WRONG_ARG +
-              arg_nok + '\n')
-        print(colorama.Fore.RESET + shared.usage())
+        print(colorama.Fore.RED + lcl.WRONG_ARG + arg_nok + '\n')
+        print(colorama.Fore.RESET + shrd.usage())
 
 
 def auto_upd(childs, last_upd):
     """Automatic update based on current date vs last update date."""
     print_state(childs, last_upd)
-    last_upd = shared.auto_upd_datafile(childs, last_upd)
+    last_upd = shrd.auto_upd_datafile(childs, last_upd)
     print_state(childs, last_upd)
 
 
@@ -95,16 +110,16 @@ def start(argv):
     """Print banner, read/create data & log file and process args."""
     colorama.init()
 
-    print(shared.banner())
-    childs, last_upd = shared.open_create_datafile()
+    print(shrd.banner())
+    childs, last_upd = shrd.open_create_datafile()
 
-    arg0 = str.lower(argv[0])
+    arg0 = argv[0].lower()
     if arg0 in ['-h', '--help']:
-        print(shared.usage())
+        print(shrd.usage())
     elif arg0 in ['-v', '--version']:
-        print('Versão', shared.version())
+        print(lcl.VERSION, shrd.version())
     elif arg0 in ['-l', '--license']:
-        print(shared.license_())
+        print(shrd.license_())
     elif arg0 in ['-a', '--auto']:
         auto_upd(childs, last_upd)
     else:
