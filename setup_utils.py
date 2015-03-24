@@ -62,6 +62,7 @@ def update_copyright():
 
         with codecs.open(filename, 'w', encoding='utf8') as file_:
             file_.writelines(new_text)
+        # TODO copyright = u'2014-2015, Joao Carlos Roseta Matos' in doc/conf.py
 
 
 def sleep(seconds=3):

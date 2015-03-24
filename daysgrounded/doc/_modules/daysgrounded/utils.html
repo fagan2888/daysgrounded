@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>daysgrounded.daysgrounded &mdash; daysgrounded 0.0.21 documentation</title>
+    <title>daysgrounded.utils &mdash; daysgrounded 0.0.21 documentation</title>
     
     <link rel="stylesheet" href="../../_static/classic.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
@@ -46,16 +46,12 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <h1>Source code for daysgrounded.daysgrounded</h1><div class="highlight"><pre>
+  <h1>Source code for daysgrounded.utils</h1><div class="highlight"><pre>
 <span class="c">#!/usr/bin/env python</span>
 <span class="c"># -*- coding: utf-8 -*-</span>
 
 <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">Manage child(s) grounded days.</span>
-
-<span class="sd">If there are any command line arguments it calls the cli module.</span>
-<span class="sd">Otherwise the gui module.</span>
-<span class="sd">See usage.txt for command line usage.</span>
+<span class="sd">Utils library.</span>
 
 <span class="sd">Copyright 2009-2015 Joao Carlos Roseta Matos</span>
 
@@ -79,27 +75,51 @@
 <span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">print_function</span>
 <span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">unicode_literals</span>
 
+<span class="kn">import</span> <span class="nn">imp</span>
+<span class="kn">import</span> <span class="nn">locale</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="c">#import pkg_resources</span>
 <span class="kn">import</span> <span class="nn">sys</span>
 
-<span class="kn">import</span> <span class="nn">cli</span>
-<span class="kn">import</span> <span class="nn">gui_tk_func</span> <span class="kn">as</span> <span class="nn">gui</span>
-<span class="c">#import gui_tk_oo as gui</span>
-<span class="c">#import gui_qt as gui</span>
 
+<span class="n">PY</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">version</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
 
-<div class="viewcode-block" id="main"><a class="viewcode-back" href="../../reference.html#daysgrounded.daysgrounded.main">[docs]</a><span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
-    <span class="sd">&quot;&quot;&quot;Start CLI or GUI.&quot;&quot;&quot;</span>
-    <span class="n">args</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
-    <span class="k">if</span> <span class="n">args</span><span class="p">:</span>
-        <span class="n">cli</span><span class="o">.</span><span class="n">start</span><span class="p">(</span><span class="n">args</span><span class="p">)</span>
+<span class="c"># set correct path to all data files</span>
+<span class="n">DATA_PATH</span> <span class="o">=</span> <span class="s">&#39;&#39;</span>
+<span class="c"># if current module is frozen, use exe path</span>
+<span class="k">if</span> <span class="p">(</span><span class="nb">hasattr</span><span class="p">(</span><span class="n">sys</span><span class="p">,</span> <span class="s">&#39;frozen&#39;</span><span class="p">)</span> <span class="ow">or</span>  <span class="c"># new py2exe</span>
+     <span class="nb">hasattr</span><span class="p">(</span><span class="n">sys</span><span class="p">,</span> <span class="s">&#39;importers&#39;</span><span class="p">)</span> <span class="ow">or</span>  <span class="c"># old py2exe</span>
+     <span class="n">imp</span><span class="o">.</span><span class="n">is_frozen</span><span class="p">(</span><span class="s">&#39;__main__&#39;</span><span class="p">)):</span>  <span class="c"># tools/freeze</span>
+    <span class="k">if</span> <span class="n">PY</span> <span class="o">&lt;</span> <span class="mi">3</span><span class="p">:</span>
+        <span class="n">DATA_PATH</span> <span class="o">=</span> <span class="nb">unicode</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">executable</span><span class="p">),</span> <span class="s">&#39;latin_1&#39;</span><span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
-        <span class="n">gui</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+        <span class="n">DATA_PATH</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">executable</span><span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="c"># use X:\PyhtonXX\Lib\site-packages\daysgrounded</span>
+    <span class="c">#DATA_PATH = pkg_resources.resource_filename(__name__, &lt;some file&gt;)</span>
+    <span class="c">#DATA_PATH = DATA_PATH.replace(&lt;some file&gt;, &#39;&#39;)</span>
+    <span class="k">if</span> <span class="n">PY</span> <span class="o">&lt;</span> <span class="mi">3</span><span class="p">:</span>
+        <span class="n">DATA_PATH</span> <span class="o">=</span> <span class="nb">unicode</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="s">&#39;latin_1&#39;</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">DATA_PATH</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
 
+
+<div class="viewcode-block" id="sys_lang"><a class="viewcode-back" href="../../reference.html#daysgrounded.utils.sys_lang">[docs]</a><span class="k">def</span> <span class="nf">sys_lang</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;Get system language.&quot;&quot;&quot;</span>
+    <span class="n">lang</span> <span class="o">=</span> <span class="n">locale</span><span class="o">.</span><span class="n">getdefaultlocale</span><span class="p">()</span>
+    <span class="c">#lang = &#39;EN&#39;  # only for testing</span>
+    <span class="k">if</span> <span class="s">&#39;pt_&#39;</span> <span class="ow">in</span> <span class="n">lang</span><span class="p">[</span><span class="mi">0</span><span class="p">]:</span>  <span class="c"># Portuguese</span>
+        <span class="k">return</span> <span class="s">&#39;PT&#39;</span>
+    <span class="k">else</span><span class="p">:</span>  <span class="c"># English</span>
+        <span class="k">return</span> <span class="s">&#39;EN&#39;</span>
 </div>
+<span class="n">LANG</span> <span class="o">=</span> <span class="n">sys_lang</span><span class="p">()</span>
+
+
 <span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&#39;__main__&#39;</span><span class="p">:</span>
-    <span class="c">#import doctest</span>
-    <span class="c">#doctest.testmod(verbose=True)</span>
-    <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="n">main</span><span class="p">())</span>
+    <span class="c"># import doctest</span>
+    <span class="c"># doctest.testmod(verbose=True)</span>
+    <span class="k">pass</span>
 </pre></div>
 
           </div>

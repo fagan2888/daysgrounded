@@ -6,15 +6,15 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>ChangeLog &mdash; daysgrounded 0.0.20 documentation</title>
+    <title>ChangeLog &mdash; daysgrounded 0.0.21 documentation</title>
     
-    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/classic.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    './',
-        VERSION:     '0.0.20',
+        VERSION:     '0.0.21',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -23,12 +23,12 @@
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
-    <link rel="top" title="daysgrounded 0.0.20 documentation" href="index.html" />
+    <link rel="top" title="daysgrounded 0.0.21 documentation" href="index.html" />
     <link rel="next" title="Code authors" href="codeauthors.html" />
     <link rel="prev" title="License" href="license.html" /> 
   </head>
-  <body>
-    <div class="related">
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
@@ -43,20 +43,37 @@
         <li class="right" >
           <a href="license.html" title="License"
              accesskey="P">previous</a> |</li>
-        <li><a href="index.html">daysgrounded 0.0.20 documentation</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="index.html">daysgrounded 0.0.21 documentation</a> &raquo;</li> 
       </ul>
     </div>  
 
     <div class="document">
       <div class="documentwrapper">
         <div class="bodywrapper">
-          <div class="body">
+          <div class="body" role="main">
             
   <div class="section" id="changelog">
 <h1>ChangeLog<a class="headerlink" href="#changelog" title="Permalink to this headline">¶</a></h1>
-<p>0.0.20 2014-06-03 :: todo</p>
-<blockquote>
-<div>Cleanup.</div></blockquote>
+<p>0.0.21 2015-03-24</p>
+<div class="highlight-python"><div class="highlight"><pre>Updated doc/*.rst and daysgrounded/__init__.py to solve Sphinx problem.
+</pre></div>
+</div>
+<p>0.0.20 2015-03-24</p>
+<div class="highlight-python"><div class="highlight"><pre>General code cleanup.
+Cleared __input__.py.
+Create appinfo.py with basic application information to be used by the application, setup.py and setup_utils.py.
+Compatibility testing with Py3 and necessary changes. All good now.
+Renamed build.bat to build.cmd.
+Improved build.cmd.
+Improved setup.py to be universal.
+Created setup_utils.py to aid build.cmd.
+Created utils.py.
+Added copyright to all source code.
+Updated MANIFEST.in.
+and many more.
+BUG: Sphinx docs stopped working.
+</pre></div>
+</div>
 <p>0.0.19 2014-06-02</p>
 <div class="highlight-python"><div class="highlight"><pre>Added end user documentation to .gitignore.
 Added option PROJ_TYPE to build.bat to distinguish between modules and
@@ -165,7 +182,7 @@ Separate code into 3+1 files, changed code to start testing Py3 compatibility.
           </div>
         </div>
       </div>
-      <div class="sphinxsidebar">
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
   <h4>Previous topic</h4>
   <p class="topless"><a href="license.html"
@@ -173,12 +190,14 @@ Separate code into 3+1 files, changed code to start testing Py3 compatibility.
   <h4>Next topic</h4>
   <p class="topless"><a href="codeauthors.html"
                         title="next chapter">Code authors</a></p>
-  <h3>This Page</h3>
-  <ul class="this-page-menu">
-    <li><a href="_sources/changelog.txt"
-           rel="nofollow">Show Source</a></li>
-  </ul>
-<div id="searchbox" style="display: none">
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/changelog.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <form class="search" action="search.html" method="get">
       <input type="text" name="q" />
@@ -195,7 +214,7 @@ Separate code into 3+1 files, changed code to start testing Py3 compatibility.
       </div>
       <div class="clearer"></div>
     </div>
-    <div class="related">
+    <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
@@ -210,12 +229,12 @@ Separate code into 3+1 files, changed code to start testing Py3 compatibility.
         <li class="right" >
           <a href="license.html" title="License"
              >previous</a> |</li>
-        <li><a href="index.html">daysgrounded 0.0.20 documentation</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="index.html">daysgrounded 0.0.21 documentation</a> &raquo;</li> 
       </ul>
     </div>
-    <div class="footer">
-        &copy; Copyright 2014, Joao Matos.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.1.
+    <div class="footer" role="contentinfo">
+        &copy; Copyright 2014-2015, Joao Carlos Roseta Matos.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.1.
     </div>
   </body>
 </html>

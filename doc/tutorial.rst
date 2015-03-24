@@ -27,15 +27,16 @@ Options
       -h, --help            show this help message and exit
       -a, --auto            auto update based on date
       -v, --version         show version
-      -l, --license         shows license
+      -l, --license         show license
       child+/-days          eg. t+1 s-1
 
-    No argument starts gui
+    No arguments starts GUI (Graphical User Interface).
+    Maximum of 99 days.
 
 Resources
 ---------
 
-* `Repository <https://github.com/jcrmatos/DaysGrounded>`_
+* `Repository <https://github.com/jcrmatos/daysgrounded>`_
 
 Contributing
 ------------
@@ -46,4 +47,4 @@ Contributing
    ``Name <email@domain.com>``
 4. Submit a Pull Request to the master branch on GitHub.
 
-.. _repository: https://github.com/jcrmatos/DaysGrounded
+.. _repository: https://github.com/jcrmatos/daysgrounded

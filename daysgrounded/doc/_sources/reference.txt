@@ -7,10 +7,10 @@ __init__.py
 .. automodule:: daysgrounded.__init__
    :members:
 
-daysgrounded.py
----------------
+appinfo.py
+----------
 
-.. automodule:: daysgrounded.daysgrounded
+.. automodule:: daysgrounded.appinfo
    :members:
 
 cli.py
@@ -19,14 +19,32 @@ cli.py
 .. automodule:: daysgrounded.cli
    :members:
 
-gui.py
-------
+daysgrounded.py
+---------------
 
-.. automodule:: daysgrounded.gui
+.. automodule:: daysgrounded.daysgrounded
+   :members:
+
+gui_tk_func.py
+--------------
+
+.. automodule:: daysgrounded.gui_tk_func
+   :members:
+
+localization.py
+---------------
+
+.. automodule:: daysgrounded.localization
    :members:
 
 shared.py
 ---------
 
 .. automodule:: daysgrounded.shared
+   :members:
+   
+utils.py
+--------
+
+.. automodule:: daysgrounded.utils
    :members:

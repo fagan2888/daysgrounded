@@ -1,6 +1,11 @@
+0.0.21 2015-03-24 ::
+
+	Updated doc/*.rst and daysgrounded/__init__.py to solve Sphinx problem.
+
+	
 0.0.20 2015-03-24 ::
 
-    General code cleanup.
+	General code cleanup.
 	Cleared __input__.py.
 	Create appinfo.py with basic application information to be used by the application, setup.py and setup_utils.py.
 	Compatibility testing with Py3 and necessary changes. All good now.

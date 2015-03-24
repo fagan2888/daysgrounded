@@ -39,10 +39,10 @@ Options
       -h, --help            show this help message and exit
       -a, --auto            auto update based on date
       -v, --version         show version
-      -l, --license         shows license
+      -l, --license         show license
       child+/-days          eg. t+1 s-1
 
-    No argument starts gui (graphical user interface).
+    No arguments starts GUI (Graphical User Interface).
     Maximum of 99 days.
 
 Resources

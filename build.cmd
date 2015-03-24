@@ -58,8 +58,7 @@ if %ERRORLEVEL%==0 goto :DOC
 goto :EXIT
 
 :DOC
-rem if not exist doc goto :NO_DOC
-goto :NO_DOC
+if not exist doc goto :NO_DOC
 
 echo.
 echo *** Sphinx
