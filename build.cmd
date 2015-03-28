@@ -21,9 +21,10 @@ rem
 rem build - builds sdist and bdist_wheel
 rem build pypi - uploads sdist and bdist_wheel to PyPI
 rem build py2exe - creates windows exe
-rem build clean - clears dirs and files to have a clean env
-rem build test - uploads sdist and bdist_wheel to test
+rem build test - run tests
 rem build cxf - not working for the moment
+rem build clean - clears dirs and files to have a clean env
+rem build pypitest - uploads sdist and bdist_wheel to test
 rem
 rem Requires:
 rem Python, Sphinx, Miktex, py.test, twine, py2exe, cxf, twine.
@@ -31,46 +32,47 @@ rem Python, Sphinx, Miktex, py.test, twine, py2exe, cxf, twine.
 set OLDPATH=%PATH%
 set PATH=d:\miktex\miktex\bin;%PATH%
 
-if "%1"=="test" goto :TEST
 if "%1"=="pypi" goto :PYPI
+if "%1"=="test" goto :TEST
+if "%1"=="pypitest" goto :PYPITEST
 
 echo.
 echo *** Cleanup and update basic info files
 echo.
 if exist app_ver.txt del app_ver.txt
+if exist app_name.txt del app_name.txt
+if exist app_type.txt del app_type.txt
+if exist py_ver.txt del py_ver.txt
+if exist *.pyc del *.pyc
+
 python setup_utils.py app_ver()
 if not exist app_ver.txt goto :EXIT
 for /f "delims=" %%f in (app_ver.txt) do set APP_VER=%%f
 del app_ver.txt
 
-python setup_utils.py check_copyright()
-if ERRORLEVEL == 1 goto :EXIT
-
-if exist app_name.txt del app_name.txt
 python setup_utils.py app_name()
 if not exist app_name.txt goto :EXIT
 for /f "delims=" %%f in (app_name.txt) do set PROJECT=%%f
 del app_name.txt
 
-if exist app_type.txt del app_type.txt
-python setup_utils.py app_type()
-if not exist app_type.txt goto :EXIT
-for /f "delims=" %%f in (app_type.txt) do set PROJ_TYPE=%%f
-del app_type.txt
-
-if exist py_ver.txt del py_ver.txt
-python setup_utils.py py_ver()
-if not exist py_ver.txt goto :EXIT
-for /f "delims=" %%f in (py_ver.txt) do set PY_VER=%%f
-del py_ver.txt
-
+if exist %PROJECT%\*.pyc del %PROJECT%\*.pyc
 rd /s /q build
 rd /s /q dist
 rd /s /q %PROJECT%.egg-info
 rd /s /q %PROJECT%-%APP_VER%
 rd /s /q daysgrounded\doc
-if exist *.pyc del *.pyc
-if exist %PROJECT%\*.pyc del %PROJECT%\*.pyc
+
+if "%1"=="clean" goto :EXIT
+
+python setup_utils.py app_type()
+if not exist app_type.txt goto :EXIT
+for /f "delims=" %%f in (app_type.txt) do set PROJ_TYPE=%%f
+del app_type.txt
+
+python setup_utils.py py_ver()
+if not exist py_ver.txt goto :EXIT
+for /f "delims=" %%f in (py_ver.txt) do set PY_VER=%%f
+del py_ver.txt
 
 copy /y %PROJECT%\AUTHORS.rst %PROJECT%\AUTHORS.txt > nul
 copy /y %PROJECT%\ChangeLog.rst %PROJECT%\ChangeLog.txt > nul
@@ -78,20 +80,23 @@ copy /y %PROJECT%\README.rst %PROJECT%\README.txt > nul
 copy /y %PROJECT%\COPYING.rst %PROJECT%\COPYING.txt > nul
 copy /y %PROJECT%\README.rst . > nul
 
-if "%1"=="clean" goto :EXIT
+python setup_utils.py check_copyright()
+if ERRORLEVEL == 1 goto :EXIT
 
 python setup_utils.py update_copyright()
 
 if not exist test goto :DOC
 
+:TEST
 echo.
 echo *** DocTest/UnitTest
 echo.
 rem python -m doctest -v test/test.rst
 rem python -m unittest discover -v -s test
 py.test --cov-report term-missing --cov %PROJECT% -v test/
-if %ERRORLEVEL%==0 goto :DOC
-goto :EXIT
+if ERRORLEVEL == 1 goto :EXIT
+
+if "%1"=="test" goto :EXIT
 
 :DOC
 if not exist doc goto :NO_DOC
@@ -128,10 +133,6 @@ cmd /c make clean
 cd ..
 
 python setup_utils.py create_doc_zip()
-
-echo.
-echo *** End of Sphinx
-echo.
 
 :NO_DOC
 pause
@@ -182,9 +183,9 @@ echo *** If there were filesystem errors (eg. directory not empty), try repeatin
 echo.
 goto :EXIT
 
-:TEST
+:PYPITEST
 echo.
-echo *** TEST: Register and upload
+echo *** PYPITEST: Register and upload
 echo.
 python setup.py register -r test
 twine upload -r test dist/*
@@ -207,9 +208,8 @@ rem python setup.py sdist bdist_wheel upload -r pypi
 
 rem python setup.py upload_docs --upload-dir=%PROJECT%\doc
 echo.
-echo *** Don't forget to upload the pythonhosted.org/doc.zip to PyPI
+echo *** Don't forget to upload the pythonhosted.org/doc.zip to PyPI and commit to VCS
 echo.
-
 goto :EXIT
 
 :CXF

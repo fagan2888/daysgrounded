@@ -16,7 +16,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-"""Setup for source, egg, wheel and py2exe (CXF still not working)."""
+"""Setup for source, egg, wheel and py2exe."""
 
 # Python 3 compatibility
 from __future__ import absolute_import

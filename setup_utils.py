@@ -151,9 +151,8 @@ def app_type():
 
 def py_ver():
     """Write Python version to text file."""
-    py_ver = sys.version.split()[0]
-    py_ver = py_ver.split('.')
-    py_ver = str(py_ver[0] + '.' + py_ver[1])
+    py_ver_lst = sys.version.split('.')
+    py_ver = str(py_ver_lst[0] + '.' + py_ver_lst[1])
 
     with open('py_ver.txt', 'w') as file_:
         file_.write(py_ver)
@@ -179,6 +178,7 @@ def prep_rst2pdf():
 
 
 def create_doc_zip():
+    """Create doc.zip to publish in PyPI."""
     doc_path = appinfo.APP_NAME + '/doc'
     with zip.ZipFile('pythonhosted.org/doc.zip', 'w') as archive:
         for root, dirs, files in os.walk(doc_path):
