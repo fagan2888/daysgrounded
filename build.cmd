@@ -1,6 +1,21 @@
 @echo off
 cls
 
+rem Copyright 2009-2015 Joao Carlos Roseta Matos
+rem
+rem This program is free software: you can redistribute it and/or modify
+rem it under the terms of the GNU General Public License as published by
+rem the Free Software Foundation, either version 3 of the License, or
+rem (at your option) any later version.
+rem
+rem This program is distributed in the hope that it will be useful,
+rem but WITHOUT ANY WARRANTY; without even the implied warranty of
+rem MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+rem GNU General Public License for more details.
+rem
+rem You should have received a copy of the GNU General Public License
+rem along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
 rem Usage:
 rem
 rem build - builds sdist and bdist_wheel
@@ -22,24 +37,32 @@ if "%1"=="pypi" goto :PYPI
 echo.
 echo *** Cleanup and update basic info files
 echo.
+if exist app_ver.txt del app_ver.txt
 python setup_utils.py app_ver()
 if not exist app_ver.txt goto :EXIT
 for /f "delims=" %%f in (app_ver.txt) do set APP_VER=%%f
 del app_ver.txt
 
+python setup_utils.py check_copyright()
+if ERRORLEVEL == 1 goto :EXIT
+
+if exist app_name.txt del app_name.txt
 python setup_utils.py app_name()
+if not exist app_name.txt goto :EXIT
 for /f "delims=" %%f in (app_name.txt) do set PROJECT=%%f
 del app_name.txt
 
+if exist app_type.txt del app_type.txt
 python setup_utils.py app_type()
+if not exist app_type.txt goto :EXIT
 for /f "delims=" %%f in (app_type.txt) do set PROJ_TYPE=%%f
 del app_type.txt
 
+if exist py_ver.txt del py_ver.txt
 python setup_utils.py py_ver()
+if not exist py_ver.txt goto :EXIT
 for /f "delims=" %%f in (py_ver.txt) do set PY_VER=%%f
 del py_ver.txt
-
-python setup_utils.py update_copyright()
 
 rd /s /q build
 rd /s /q dist
@@ -56,6 +79,8 @@ copy /y %PROJECT%\COPYING.rst %PROJECT%\COPYING.txt > nul
 copy /y %PROJECT%\README.rst . > nul
 
 if "%1"=="clean" goto :EXIT
+
+python setup_utils.py update_copyright()
 
 if not exist test goto :DOC
 
@@ -180,7 +205,7 @@ rem if %PROJ_TYPE%==module goto :EXIT
 rem rem python setup.py sdist bdist_egg bdist_wininst bdist_wheel upload -r pypi
 rem python setup.py sdist bdist_wheel upload -r pypi
 
-rem upload docs
+rem python setup.py upload_docs --upload-dir=%PROJECT%\doc
 echo.
 echo *** Don't forget to upload the pythonhosted.org/doc.zip to PyPI
 echo.

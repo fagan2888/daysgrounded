@@ -1,8 +1,20 @@
+0.0.27 2015-03-28 ::
+
+	Changed licensing inside docstrings to comments.
+    Updated update_copyright() function in setup_utils.py to only update
+    files that are not on use, when it's called.
+    update_copyright() now also checks the license file.
+    Created a new function called check_copyright() in setup_utils.py to check
+    the copyright of files in use and warn if they have to be updated.
+    Changed COPYING.rst to be compatible with update_copyright() function.
+    Added the above check_copyright and other checks to build.cmd.
+
+
 0.0.26 2015-03-24 ::
 
 	Changed setup_utils.py to update copyright in doc/conf.py.
 
-	
+
 0.0.25 2015-03-24 ::
 
 	Added new function to setup_utils.py to create pythonhosted.org/doc.zip.
@@ -17,7 +29,7 @@
 	Reverted the Sphinx theme to 'classic' because otherwise it does not build the html documentation.
 	Opened issue in RTD for them to update their system for the new name ('classic') of the old 'default' theme.
 
-	
+
 0.0.22 2015-03-24 ::
 
 	Reverted the Sphinx theme to the old 'default' because ReadTheDocs isn't compatible yet.
@@ -27,7 +39,7 @@
 
 	Updated doc/*.rst and daysgrounded/__init__.py to solve Sphinx problem.
 
-	
+
 0.0.20 2015-03-24 ::
 
 	General code cleanup.

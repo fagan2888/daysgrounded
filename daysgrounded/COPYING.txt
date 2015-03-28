@@ -3,8 +3,8 @@ License
 
 ::
 
-        daysgrounded - blablabla
-        Copyright (C) 2014-2015  Joao Carlos Roseta Matos
+        daysgrounded - Manage child(s) grounded days.
+        Copyright 2009-2015 Joao Carlos Roseta Matos
 
         This program is free software; you can redistribute it and/or modify
         it under the terms of the GNU General Public License as published by

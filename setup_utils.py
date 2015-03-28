@@ -1,24 +1,22 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-"""
-Setup utils library.
+# Copyright 2009-2015 Joao Carlos Roseta Matos
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-Copyright 2009-2015 Joao Carlos Roseta Matos
-
-This program is free software: you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation, either version 3 of the License, or
-(at your option) any later version.
-
-This program is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
-
-You should have received a copy of the GNU General Public License
-along with this program.  If not, see <http://www.gnu.org/licenses/>.
-"""
+"""Setup utils library."""
 
 # Python 3 compatibility
 from __future__ import absolute_import
@@ -45,44 +43,82 @@ sys.path.insert(1, modules_dir)
 import appinfo
 
 
+def check_copyright():
+    """Check copyright on files that have to be updated manually."""
+    files = ['setup_utils.py', 'build.cmd', appinfo.APP_NAME + '/appinfo.py']
+    update_required = 0
+    for filename in files:
+        if os.path.isfile(filename):
+            with codecs.open(filename, encoding='utf8') as file_:
+                text = file_.readlines()
+            for line in text:
+                if appinfo.COPYRIGHT in line:
+                    break
+                if 'Copyright 2009-' in line:
+                    print('Copyright in ' + filename + ' is not updated.')
+                    update_required += 1
+                    break
+    if update_required:
+        sys.exit(1)
+
+
 def update_copyright():
-    """Update copyright on all py files."""
+    """Update copyright on source and license files."""
     files = glob.glob('*.py')
+    files = [file_ for file_ in files if file_ != 'setup_utils.py']
     files += glob.glob(appinfo.APP_NAME + '/*.py')
+    files = [file_ for file_ in files if (
+             file_ != appinfo.APP_NAME + os.sep + 'appinfo.py')]
     for filename in files:
         with codecs.open(filename, encoding='utf8') as file_:
             text = file_.readlines()
-
         new_text = ''
-        found = False
+        changed = False
         for line in text:
-            if not found and 'Copyright 2009-' in line:
-                new_text += appinfo.COPYRIGHT + os.linesep
-                found = True
+            if ((not changed) and (appinfo.COPYRIGHT not in line) and
+                 ('Copyright 2009-' in line)):
+                new_text += '# ' + appinfo.COPYRIGHT + os.linesep
+                changed = True
             else:
                 new_text += line
+        if changed:
+            with codecs.open(filename, 'w', encoding='utf8') as file_:
+                file_.writelines(new_text)
 
-        with codecs.open(filename, 'w', encoding='utf8') as file_:
-            file_.writelines(new_text)
-    
     filename = 'doc/conf.py'
     if os.path.isfile(filename):
         with codecs.open(filename, encoding='utf8') as file_:
             text = file_.readlines()
-
-            new_text = ''
-            found = False
-            for line in text:
-                if not found and "copyright = u'2009-" in line:
-                    new_text += ("copyright = u'2009-" +
-                                 str(dt.date.today().year) + ', '  +
-                                 appinfo.AUTHOR + "'" + os.linesep)
-                    found = True
-                else:
-                    new_text += line
-
+        new_text = ''
+        changed = False
+        doc_copyright = ("copyright = u'2009-" + str(dt.date.today().year) +
+                         ', '  + appinfo.AUTHOR + "'")
+        for line in text:
+            if ((not changed) and ("copyright = u'2009-" in line) and
+                 (doc_copyright not in line)):
+                new_text += doc_copyright + os.linesep
+                changed = True
+            else:
+                new_text += line
+        if changed:
             with codecs.open(filename, 'w', encoding='utf8') as file_:
-                file_.writelines(new_text)        
+                file_.writelines(new_text)
+
+    filename = appinfo.APP_NAME + '/COPYING.rst'
+    with codecs.open(filename, encoding='utf8') as file_:
+        text = file_.readlines()
+    new_text = ''
+    changed = False
+    for line in text:
+        if ((not changed) and (appinfo.COPYRIGHT not in line) and
+             ('Copyright ' + '2009-' in line)):
+            new_text += '        ' + appinfo.COPYRIGHT + os.linesep
+            changed = True
+        else:
+            new_text += line
+    if changed:
+        with codecs.open(filename, 'w', encoding='utf8') as file_:
+            file_.writelines(new_text)
 
 
 def sleep(seconds=5):
