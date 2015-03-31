@@ -32,6 +32,11 @@ rem Python, Sphinx, Miktex, py.test, twine, py2exe, cxf, twine.
 set OLDPATH=%PATH%
 set PATH=d:\miktex\miktex\bin;%PATH%
 
+python setup_utils.py app_name()
+if not exist app_name.txt goto :EXIT
+for /f "delims=" %%f in (app_name.txt) do set PROJECT=%%f
+del app_name.txt
+
 if "%1"=="pypi" goto :PYPI
 if "%1"=="test" goto :TEST
 if "%1"=="pypitest" goto :PYPITEST
@@ -43,17 +48,16 @@ if exist app_ver.txt del app_ver.txt
 if exist app_name.txt del app_name.txt
 if exist app_type.txt del app_type.txt
 if exist py_ver.txt del py_ver.txt
+if exist README.txt del README.txt
+if exist COPYING.txt del COPYING.txt
+if exist AUTHORS.txt del AUTHORS.txt
+if exist ChangeLog.txt del ChangeLog.txt
 if exist *.pyc del *.pyc
 
 python setup_utils.py app_ver()
 if not exist app_ver.txt goto :EXIT
 for /f "delims=" %%f in (app_ver.txt) do set APP_VER=%%f
 del app_ver.txt
-
-python setup_utils.py app_name()
-if not exist app_name.txt goto :EXIT
-for /f "delims=" %%f in (app_name.txt) do set PROJECT=%%f
-del app_name.txt
 
 if exist %PROJECT%\*.pyc del %PROJECT%\*.pyc
 rd /s /q build
@@ -74,11 +78,11 @@ if not exist py_ver.txt goto :EXIT
 for /f "delims=" %%f in (py_ver.txt) do set PY_VER=%%f
 del py_ver.txt
 
-copy /y %PROJECT%\AUTHORS.rst %PROJECT%\AUTHORS.txt > nul
-copy /y %PROJECT%\ChangeLog.rst %PROJECT%\ChangeLog.txt > nul
-copy /y %PROJECT%\README.rst %PROJECT%\README.txt > nul
-copy /y %PROJECT%\COPYING.rst %PROJECT%\COPYING.txt > nul
-copy /y %PROJECT%\README.rst . > nul
+copy /y AUTHORS.rst AUTHORS.txt > nul
+copy /y ChangeLog.rst ChangeLog.txt > nul
+copy /y README.rst README.txt > nul
+copy /y COPYING.rst COPYING.txt > nul
+copy /y COPYING.txt %PROJECT% > nul
 
 python setup_utils.py check_copyright()
 if ERRORLEVEL == 1 goto :EXIT
@@ -206,10 +210,7 @@ rem if %PROJ_TYPE%==module goto :EXIT
 rem rem python setup.py sdist bdist_egg bdist_wininst bdist_wheel upload -r pypi
 rem python setup.py sdist bdist_wheel upload -r pypi
 
-rem python setup.py upload_docs --upload-dir=%PROJECT%\doc
-echo.
-echo *** Don't forget to upload the pythonhosted.org/doc.zip to PyPI and commit to VCS
-echo.
+python setup.py register upload_docs --upload-dir=%PROJECT%\doc
 goto :EXIT
 
 :CXF

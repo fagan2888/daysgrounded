@@ -58,7 +58,7 @@ copyright = u'2009-2015, Joao Carlos Roseta Matos'
 #
 # The short X.Y version.
 #version = '0.0.16'
-version = open(u'../daysgrounded/ChangeLog.rst').readline().split()[0]
+version = open(u'../ChangeLog.rst').readline().split()[0]
 
 # The full version, including alpha/beta/rc tags.
 #release = '0.0.16'

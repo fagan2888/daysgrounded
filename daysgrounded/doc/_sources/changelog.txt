@@ -1,4 +1,4 @@
 ChangeLog
 =========
 
-.. include:: ../daysgrounded/ChangeLog.rst
+.. include:: ../ChangeLog.rst

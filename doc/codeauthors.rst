@@ -1,1 +1,1 @@
-.. include:: ../daysgrounded/AUTHORS.rst
+.. include:: ../AUTHORS.rst

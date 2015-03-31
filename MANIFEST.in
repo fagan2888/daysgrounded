@@ -1,5 +1,6 @@
-include requirements.txt setup_utils.py
-include daysgrounded/*.txt daysgrounded/*.rst
+include build.cmd setup_utils.py
+include *.rst *.txt
+include daysgrounded/*.txt
 recursive-include daysgrounded/doc *
 include doc/*.rst doc/*.py
 include pythonhosted.org/*

@@ -104,7 +104,7 @@ def update_copyright():
             with codecs.open(filename, 'w', encoding='utf8') as file_:
                 file_.writelines(new_text)
 
-    filename = appinfo.APP_NAME + '/COPYING.rst'
+    filename = 'COPYING.rst'
     with codecs.open(filename, encoding='utf8') as file_:
         text = file_.readlines()
     new_text = ''
@@ -134,7 +134,7 @@ def app_name():
 
 def app_ver():
     """Write application version to text file if equal to ChangeLog.rst."""
-    with open(appinfo.APP_NAME + '/ChangeLog.rst') as file_:
+    with open('ChangeLog.rst') as file_:
         changelog_app_ver = file_.readline().split()[0]
     if changelog_app_ver == appinfo.APP_VERSION:
         with open('app_ver.txt', 'w') as file_:
@@ -151,11 +151,9 @@ def app_type():
 
 def py_ver():
     """Write Python version to text file."""
-    py_ver_lst = sys.version.split('.')
-    py_ver = str(py_ver_lst[0] + '.' + py_ver_lst[1])
-
     with open('py_ver.txt', 'w') as file_:
-        file_.write(py_ver)
+        file_.write(str(sys.version_info.major) + '.' +
+                    str(sys.version_info.minor))
 
 
 def prep_rst2pdf():

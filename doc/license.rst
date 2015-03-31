@@ -1,1 +1,1 @@
-.. include:: ../daysgrounded/COPYING.rst
+.. include:: ../COPYING.rst
