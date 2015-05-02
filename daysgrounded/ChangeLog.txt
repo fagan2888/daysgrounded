@@ -1,3 +1,8 @@
+0.0.31 2015-05-02 ::
+
+	Correct git dist.
+
+
 0.0.30 2015-05-02 ::
 
 	Update build system.
