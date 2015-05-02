@@ -1,3 +1,8 @@
+0.0.32 2015-05-02 ::
+
+	Correct usage files.
+
+
 0.0.31 2015-05-02 ::
 
 	Correct git dist.

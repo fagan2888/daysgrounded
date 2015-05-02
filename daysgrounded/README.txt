@@ -41,7 +41,7 @@ Installation, usage and options
 
     $ daysgrounded -h
 	
-   usage: daysgrounded [-option | child+/-days...]
+    usage: daysgrounded [-option | child+/-days...]
 
     optional arguments:
       -a, --auto            auto update based on date

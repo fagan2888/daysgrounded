@@ -1,3 +1,4 @@
+
     usage: daysgrounded [-option | child+/-days...]
 
     optional arguments:

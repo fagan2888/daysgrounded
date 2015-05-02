@@ -1,3 +1,4 @@
+
     uso: daysgrounded [-opção | criança+/-dias...]
 
     argumentos opcionais:
