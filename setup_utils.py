@@ -24,32 +24,31 @@ from __future__ import division
 from __future__ import print_function
 from __future__ import unicode_literals
 
-import codecs
+# import builtins  # Python 3 compatibility
 import datetime as dt
+# import future  # Python 3 compatibility
 import glob
+import io  # Python 3 compatibility
 import os
-##import pprint as pp
+# import pprint as pp
 import sys
-##import sysconfig
+# import sysconfig
 import time
 import zipfile as zip
-
-# add modules_dir to PYTHONPATH so import appinfo works
-# this assumes that the current dir has the same name as the subdir where
-# the modules reside
-modules_dir = os.getcwd().split(os.sep)[-1]
-sys.path.insert(1, modules_dir)
 
 import appinfo
 
 
+SYS_ENC = sys.getfilesystemencoding()
+
+
 def check_copyright():
     """Check copyright on files that have to be updated manually."""
-    files = ['setup_utils.py', 'build.cmd', appinfo.APP_NAME + '/appinfo.py']
+    files = ['setup_utils.py', 'build.cmd', 'appinfo.py']
     update_required = 0
     for filename in files:
         if os.path.isfile(filename):
-            with codecs.open(filename, encoding='utf8') as file_:
+            with io.open(filename, encoding=SYS_ENC) as file_:
                 text = file_.readlines()
             for line in text:
                 if appinfo.COPYRIGHT in line:
@@ -65,59 +64,58 @@ def check_copyright():
 def update_copyright():
     """Update copyright on source and license files."""
     files = glob.glob('*.py')
-    files = [file_ for file_ in files if file_ != 'setup_utils.py']
+    files = [file_ for file_ in files if file_ not in ['appinfo.py',
+                                                       'setup_utils.py']]
     files += glob.glob(appinfo.APP_NAME + '/*.py')
-    files = [file_ for file_ in files if (
-             file_ != appinfo.APP_NAME + os.sep + 'appinfo.py')]
     for filename in files:
-        with codecs.open(filename, encoding='utf8') as file_:
+        with io.open(filename, encoding=SYS_ENC) as file_:
             text = file_.readlines()
         new_text = ''
         changed = False
         for line in text:
             if ((not changed) and (appinfo.COPYRIGHT not in line) and
-                 ('Copyright 2009-' in line)):
-                new_text += '# ' + appinfo.COPYRIGHT + os.linesep
+               ('Copyright 2009-' in line)):
+                new_text += '# ' + appinfo.COPYRIGHT + '\n'
                 changed = True
             else:
                 new_text += line
         if changed:
-            with codecs.open(filename, 'w', encoding='utf8') as file_:
+            with io.open(filename, 'w', encoding=SYS_ENC) as file_:
                 file_.writelines(new_text)
 
     filename = 'doc/conf.py'
     if os.path.isfile(filename):
-        with codecs.open(filename, encoding='utf8') as file_:
+        with io.open(filename, encoding=SYS_ENC) as file_:
             text = file_.readlines()
         new_text = ''
         changed = False
         doc_copyright = ("copyright = u'2009-" + str(dt.date.today().year) +
-                         ', '  + appinfo.AUTHOR + "'")
+                         ', ' + appinfo.APP_AUTHOR + "'")
         for line in text:
             if ((not changed) and ("copyright = u'2009-" in line) and
-                 (doc_copyright not in line)):
-                new_text += doc_copyright + os.linesep
+               (doc_copyright not in line)):
+                new_text += doc_copyright + '\n'
                 changed = True
             else:
                 new_text += line
         if changed:
-            with codecs.open(filename, 'w', encoding='utf8') as file_:
+            with io.open(filename, 'w', encoding=SYS_ENC) as file_:
                 file_.writelines(new_text)
 
-    filename = 'COPYING.rst'
-    with codecs.open(filename, encoding='utf8') as file_:
+    filename = 'LICENSE.rst'
+    with io.open(filename, encoding=SYS_ENC) as file_:
         text = file_.readlines()
     new_text = ''
     changed = False
     for line in text:
         if ((not changed) and (appinfo.COPYRIGHT not in line) and
-             ('Copyright ' + '2009-' in line)):
-            new_text += '        ' + appinfo.COPYRIGHT + os.linesep
+           ('Copyright ' + '2009-' in line)):
+            new_text += '        ' + appinfo.COPYRIGHT + '\n'
             changed = True
         else:
             new_text += line
     if changed:
-        with codecs.open(filename, 'w', encoding='utf8') as file_:
+        with io.open(filename, 'w', encoding=SYS_ENC) as file_:
             file_.writelines(new_text)
 
 
@@ -146,7 +144,7 @@ def app_ver():
 def app_type():
     """Write application type (application or module) to text file."""
     with open('app_type.txt', 'w') as file_:
-        file_.write(appinfo.APP_TYPE)
+            file_.write(appinfo.APP_TYPE)
 
 
 def py_ver():
@@ -156,22 +154,48 @@ def py_ver():
                     str(sys.version_info.minor))
 
 
-def prep_rst2pdf():
-    """Remove parts of rST to create a better pdf."""
-    with open('doc/index.ori') as file_:
+def remove_copyright():
+    """Remove Copyright from README.rst."""
+    with io.open('README.rst', encoding=SYS_ENC) as file_:
         text = file_.readlines()
 
     new_text = ''
-
     for line in text:
-        if 'Contents:' in line:
+        if 'Copyright ' in line:
             pass
-        elif 'Indices and tables' in line:
+        else:
+            new_text += line
+
+    with io.open('README.rst', 'w', encoding=SYS_ENC) as file_:
+        file_.writelines(new_text)
+
+
+def prep_rst2pdf():
+    """Remove parts of rST to create a better pdf."""
+    with io.open('index.ori', encoding=SYS_ENC) as file_:
+        text = file_.readlines()
+
+    new_text = ''
+    for line in text:
+        if 'Indices and tables' in line:
             break
         else:
             new_text += line
 
-    with open('doc/index.rst', 'w') as file_:
+    with io.open('index.rst', 'w', encoding=SYS_ENC) as file_:
+        file_.writelines(new_text)
+
+    with io.open('../README.rst', encoding=SYS_ENC) as file_:
+        text = file_.readlines()
+
+    new_text = ''
+    for line in text:
+        if '.. image:: ' in line or '    :target: ' in line:
+            pass
+        else:
+            new_text += line
+
+    with io.open('../README.rst', 'w', encoding=SYS_ENC) as file_:
         file_.writelines(new_text)
 
 
@@ -181,74 +205,133 @@ def create_doc_zip():
     with zip.ZipFile('pythonhosted.org/doc.zip', 'w') as archive:
         for root, dirs, files in os.walk(doc_path):
             for file_ in files:
-                if not '.pdf' in file_:
+                if '.pdf' not in file_:
                     pathname = os.path.join(root, file_)
                     filename = pathname.replace(doc_path + os.sep, '')
                     archive.write(pathname, filename)
-                    print(pathname, filename)
 
 
-##def std_lib_modules():
-##    """List all (not complete) Standard library modules."""
-##    std_lib_dir = sysconfig.get_config_vars('LIBDEST')[0]
-##    modules_lst = []
-##    for top, dirs, files in os.walk(std_lib_dir):
-##        for nm in files:
-##            if nm != '__init__.py' and nm[-3:] == '.py':
-##                module = os.path.join(top, nm)[len(std_lib_dir)+1:-3].replace('\\','.')
-##                if 'site-packages.' not in module:
-##                    modules_lst.append(os.path.join(top, nm)[len(std_lib_dir)+1:-3].replace('\\','.'))
-##    pp.pprint(modules_lst)
+def upd_usage_in_readme():
+    """Update usage in README.rst."""
+    if os.path.isfile(appinfo.APP_NAME + '/usage.txt'):
+        with io.open(appinfo.APP_NAME +
+                     '/usage.txt', encoding=SYS_ENC) as file_:
+            usage_text = file_.read()
+            usage_text = usage_text[len(os.linesep) - 1:]  # remove 1st line
+
+        with io.open('README.rst', encoding=SYS_ENC) as file_:
+            text = file_.readlines()
+
+        new_text = ''
+        usage_section = False
+        for line in text:
+            if 'usage: ' in line:  # usage section start
+                usage_section = True
+                new_text += usage_text + '\n'
+            elif usage_section and 'Resources' not in line:
+                # bypass old usage section
+                continue
+            elif usage_section and 'Resources' in line:  # usage section end
+                usage_section = False
+                new_text += line
+            else:
+                new_text += line
+
+        with io.open('README.rst', 'w', encoding=SYS_ENC) as file_:
+            file_.writelines(new_text)
 
 
-##def non_std_lib_modules():
-##    """List all non Standard library modules."""
-##    site_lib_dir = sysconfig.get_config_vars('LIBDEST')[0]
-##    site_lib_dir += '/site-packages'
-##    modules_lst = []
-##    for top, dirs, files in os.walk(site_lib_dir):
-##        for nm in files:
-##            if nm != '__init__.py' and nm[-3:] == '.py':
-##                modules_lst.append(os.path.join(top, nm)[len(site_lib_dir)+1:-3].replace('\\','.'))
-##    pp.pprint(modules_lst)
+def change_sphinx_theme():
+    """"Change Sphinx theme according to Sphinx version."""
+    try:
+        import sphinx
+        sphinx_ver_str = sphinx.__version__
+        sphinx_ver = int(sphinx_ver_str.replace('.', ''))
+
+        with io.open('doc/conf.py', encoding=SYS_ENC) as file_:
+            text = file_.readlines()
+
+        new_text = ''
+        changed = False
+        for line in text:
+            if "html_theme = 'default'" in line and sphinx_ver >= 131:
+                new_text += "html_theme = 'alabaster'\n"
+                changed = True
+            elif "html_theme = 'alabaster'" in line and sphinx_ver < 131:
+                new_text += "html_theme = 'default'\n"
+                changed = True
+            elif 'html_theme = ' in line:
+                break
+            else:
+                new_text += line
+
+        if changed:
+            with io.open('doc/conf.py', 'w', encoding=SYS_ENC) as file_:
+                file_.write(new_text)
+    except ImportError:  # as error:
+        pass
 
 
-##def docstr2readme():
-##    """Copy main module docstring to README.rst."""
-##    with codecs.open(appinfo.APP_NAME + '/' + appinfo.APP_NAME + '.py',
-##                     encoding='utf8') as file_:
-##        text = file_.readlines()
-##
-##    text2copy = appinfo.APP_NAME + '\n' + '=' * len(appinfo.APP_NAME) + '\n\n'
-##
-##    start_copy = False
-##
-##    for line in text:
-##        if '"""' in line:
-##            if start_copy:
-##                break
-##            else:
-##                start_copy = True
-##        elif start_copy:
-##            text2copy += line
-##
-##    text2copy += '\n'
-##
-##    with codecs.open(appinfo.APP_NAME + '/README.rst',
-##                     encoding='cp1252') as file_:
-##        text = file_.readlines()
-##
-##    until_eof = False
-##
-##    for line in text:
-##        if 'Resources' in line or until_eof:
-##            text2copy += line
-##            until_eof = True
-##
-##    with codecs.open(appinfo.APP_NAME + '/README.rst', 'wb',
-##                     encoding='cp1252') as file_:
-##        file_.writelines(text2copy)
+# def std_lib_modules():
+#     """List all (not complete) Standard library modules."""
+#     std_lib_dir = sysconfig.get_config_vars('LIBDEST')[0]
+#     modules_lst = []
+#     for top, dirs, files in os.walk(std_lib_dir):
+#         for nm in files:
+#             if nm != '__init__.py' and nm[-3:] == '.py':
+#                 module = os.path.join(top, nm)[len(std_lib_dir)+1:-3].replace('\\','.')
+#                 if 'site-packages.' not in module:
+#                     modules_lst.append(os.path.join(top, nm)[len(std_lib_dir)+1:-3].replace('\\','.'))
+#     pp.pprint(modules_lst)
+
+
+# def non_std_lib_modules():
+#     """List all non Standard library modules."""
+#     site_lib_dir = sysconfig.get_config_vars('LIBDEST')[0]
+#     site_lib_dir += '/site-packages'
+#     modules_lst = []
+#     for top, dirs, files in os.walk(site_lib_dir):
+#         for nm in files:
+#             if nm != '__init__.py' and nm[-3:] == '.py':
+#                 modules_lst.append(os.path.join(top, nm)[len(site_lib_dir)+1:-3].replace('\\','.'))
+#     pp.pprint(modules_lst)
+
+
+# def docstr2readme():
+#     """Copy main module docstring to README.rst."""
+#     with io.open(appinfo.APP_NAME + '/' + appinfo.APP_NAME + '.py',
+#                  encoding=SYS_ENC) as file_:
+#         text = file_.readlines()
+#
+#     text2copy = appinfo.APP_NAME + '\n' + '=' * len(appinfo.APP_NAME) + '\n\n'
+#
+#     start_copy = False
+#     for line in text:
+#         if '"""' in line:
+#             if start_copy:
+#                 break
+#             else:
+#                 start_copy = True
+#         elif start_copy:
+#             text2copy += line
+#
+#     text2copy += '\n'
+#
+#     with io.open('README.rst', encoding=SYS_ENC) as file_:
+#         text = file_.readlines()
+#
+#     until_eof = False
+#
+#     for line in text:
+#         if 'Resources' in line or until_eof:
+#             text2copy += line
+#             until_eof = True
+#
+#     with io.open('README.rst', 'w', encoding=SYS_ENC) as file_:
+#         file_.writelines(text2copy)
 
 
 if __name__ == '__main__':
+    # import doctest
+    # doctest.testmod(verbose=True)
     eval(sys.argv[1])

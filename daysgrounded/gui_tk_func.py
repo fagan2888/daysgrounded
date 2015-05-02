@@ -24,21 +24,22 @@ from __future__ import division
 from __future__ import print_function
 from __future__ import unicode_literals
 
+# import builtins  # Python 3 compatibility
 import datetime as dt
+import future  # Python 3 compatibility
+# import io  # Python 3 compatibility
 import sys
+import tkinter as tk
+import tkinter.messagebox as tk_msg_box
 
+import common
 import localization as lcl
 import shared as shrd
-import utils
 
-if utils.PY < 3:
-    import Tkinter as tk
+if common.PY < 3:
     import ttk as tk_ttk
-    import tkMessageBox as tk_msg_box
 else:
-    import tkinter as tk
     import tkinter.ttk as tk_ttk
-    import tkinter.messagebox as tk_msg_box
 
 
 prev_child = child = childs = last_upd = None
@@ -76,8 +77,7 @@ def start():
 
         try:
             int(days_var.get())
-        except ValueError:  # as err:
-        #except ValueError:  # , err:
+        except ValueError:  # as error:
             days_var.set(0)
 
         if 0 <= int(days_var.get()) <= shrd.MAX_DAYS:
@@ -87,7 +87,7 @@ def start():
         else:
             childs_combo.set(prev_child)
             tk_msg_box.showwarning(lcl.WARNING, lcl.DAYS_RANGE +
-                                                shrd.MAX_DAYS_STR)
+                                   shrd.MAX_DAYS_STR)
 
     def set_upd_btn(upd):
         """Set or update selected child's grounded days."""
@@ -95,7 +95,7 @@ def start():
 
         try:
             int(days_var.get())
-        except ValueError:
+        except ValueError:  # as error:
             days_var.set(0)
 
         if 0 <= int(days_var.get()) <= shrd.MAX_DAYS:
@@ -108,7 +108,7 @@ def start():
             last_upd_var.set(value=str(last_upd))
         else:
             tk_msg_box.showwarning(lcl.WARNING, lcl.DAYS_RANGE +
-                                                shrd.MAX_DAYS_STR)
+                                   shrd.MAX_DAYS_STR)
 
     def confirm_exit():
         """Confirm exit from program."""
@@ -139,9 +139,9 @@ def start():
 
     def show_help(*args):
         """Show help message."""
-        tk_msg_box.showinfo(lcl.HELP, shrd.usage())
+        tk_msg_box.showinfo(lcl.HELP, common.usage())
 
-    print(shrd.banner())
+    print(common.banner())
     childs, last_upd = shrd.open_create_datafile()
 
     root = tk.Tk()
@@ -151,17 +151,17 @@ def start():
     # for exit confirmation
     win.protocol('WM_DELETE_WINDOW', confirm_exit)
 
-    win.title(lcl.DAYS_GROUNDED)
+    win.title(lcl.WIN_TITLE)
 
     # not resizable
     win.resizable(False, False)
 
     # resizable (limits)
-    #win.minsize(250, 125)
-    #win.maxsize(500, 250)
+    # win.minsize(250, 125)
+    # win.maxsize(500, 250)
 
     # needed by center function?
-    #win.attributes('-alpha', 0.0)
+    # win.attributes('-alpha', 0.0)
 
     win.bind('<F1>', show_help)
     win.bind('+', plus_btn)
@@ -185,17 +185,17 @@ def start():
     helpmenu.add_command(label=lcl.ABOUT, underline=0, state='disabled')
 
     # ToDo: log menu item
-    ## filemenu.add_separator()
-    ## check = StringVar(value=1)
-    ## filemenu.add_checkbutton(label='Log', variable=check, onvalue=1,
-    ##                          offvalue=0)
+    # filemenu.add_separator()
+    # check = StringVar(value=1)
+    # filemenu.add_checkbutton(label='Log', variable=check, onvalue=1,
+    #                          offvalue=0)
 
     frame = tk_ttk.Frame(win, padding='3 3 3 3')
     frame.grid(column=0, row=0, sticky='WNES')
 
     # if the main window is resized, the frame should expand
-    #frame.columnconfigure(0, weight=1)
-    #frame.rowconfigure(0, weight=1)
+    # frame.columnconfigure(0, weight=1)
+    # frame.rowconfigure(0, weight=1)
 
     # must convert to list for Python 3 compatibility
     prev_child = child = list(childs.keys())[0]
@@ -249,7 +249,7 @@ def start():
                   command=lambda: set_upd_btn(upd=False)).grid(column=4, row=4,
                                                                columnspan=2)
     # remove if windows is non resizable
-    #tk_ttk.Sizegrip(frame).grid(column=999, row=999, sticky=(E,S))
+    # tk_ttk.Sizegrip(frame).grid(column=999, row=999, sticky=(E,S))
 
     # padding around all widgets
     for widget in frame.winfo_children():
@@ -264,6 +264,6 @@ def start():
 
 
 if __name__ == '__main__':
-    #import doctest
-    #doctest.testmod(verbose=True)
+    # import doctest
+    # doctest.testmod(verbose=True)
     pass

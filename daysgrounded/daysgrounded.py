@@ -30,12 +30,15 @@ from __future__ import division
 from __future__ import print_function
 from __future__ import unicode_literals
 
+# import builtins  $ Python 3 compatibility
+# import future  # Python 3 compatibility
+# import io  # Python 3 compatibility
 import sys
 
 import cli
 import gui_tk_func as gui
-#import gui_tk_oo as gui
-#import gui_qt as gui
+# import gui_tk_oo as gui
+# import gui_qt as gui
 
 
 def main():
@@ -48,6 +51,6 @@ def main():
 
 
 if __name__ == '__main__':
-    #import doctest
-    #doctest.testmod(verbose=True)
+    # import doctest
+    # doctest.testmod(verbose=True)
     sys.exit(main())

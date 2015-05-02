@@ -1,6 +1,3 @@
-License
-=======
-
 ::
 
         daysgrounded - Manage child(s) grounded days.

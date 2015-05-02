@@ -24,28 +24,21 @@ from __future__ import division
 from __future__ import print_function
 from __future__ import unicode_literals
 
+# import builtins  # Python 3 compatibility
 import datetime as dt
+# import future  # Python 3 compatibility
+# import io  # Python 3 compatibility
 import pickle as pkl
 import os
 
-import appinfo
+import common
 import localization as lcl
-import utils
 
 
-LICENSE_FILE = 'COPYING.txt'
-
-if utils.LANG == 'PT':
-    BANNER_FILE = 'banner_pt.txt'
-    USAGE_FILE = 'usage_pt.txt'
-else:
-    BANNER_FILE = 'banner.txt'
-    USAGE_FILE = 'usage.txt'
-
-DATA_FILE = utils.DATA_PATH + '/daysgrounded.pkl'
+DATA_FILE = common.DATA_PATH + 'daysgrounded.pkl'
 
 LOG = False
-LOG_FILE = utils.DATA_PATH + '/daysgrounded_log.pkl'
+LOG_FILE = common.DATA_PATH + 'daysgrounded_log.pkl'
 
 MAX_DAYS = 99
 MAX_DAYS_STR = str(MAX_DAYS)
@@ -74,45 +67,14 @@ def create_file():
 
 def read_file():
     """Reads and returns childs and last_upd from the data file."""
-    with open(DATA_FILE, 'rb') as file_:
-        (childs, last_upd) = pkl.load(file_)
+    if os.path.isfile(DATA_FILE):  # if file exists
+        with open(DATA_FILE, 'rb') as file_:
+            (childs, last_upd) = pkl.load(file_)
+    else:
+        print(lcl.FILE_NOT_FOUND)
+        childs = None
+        last_upd = None
     return childs, last_upd
-
-
-def usage():
-    """Returns usage text, read from a file."""
-    with open(USAGE_FILE) as file_:
-        if utils.PY < 3:
-            text = file_.read().decode('latin_1')
-        else:
-            text = file_.read()
-    return text
-
-
-def banner():
-    """Returns banner text."""
-    banner_txt = ('\n' + appinfo.APP_NAME + lcl.VERSION_WITH_SPACES +
-                  appinfo.APP_VERSION +  ', ' + appinfo.COPYRIGHT + '\n')
-    with open(BANNER_FILE) as file_:
-        if utils.PY < 3:
-            banner_txt += file_.read().decode('latin_1')
-        else:
-            banner_txt += file_.read()
-    return banner_txt
-
-def version():
-    """Returns version."""
-    return appinfo.APP_VERSION
-
-
-def license_():
-    """Returns license text, read from a file."""
-    with open(LICENSE_FILE) as file_:
-        if utils.PY < 3:
-            text = file_.read().decode('latin_1')
-        else:
-            text = file_.read()
-    return text
 
 
 def auto_upd_datafile(childs, last_upd):
@@ -136,6 +98,6 @@ def open_create_datafile():
 
 
 if __name__ == '__main__':
-    #import doctest
-    #doctest.testmod(verbose=True)
+    # import doctest
+    # doctest.testmod(verbose=True)
     pass

@@ -1,1 +1,4 @@
-.. include:: ../COPYING.rst
+License
+-------
+
+.. include:: ../LICENSE.rst

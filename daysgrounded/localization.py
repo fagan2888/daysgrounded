@@ -24,17 +24,31 @@ from __future__ import division
 from __future__ import print_function
 from __future__ import unicode_literals
 
-import utils
+# import builtins  # Python 3 compatibility
+# import future  # Python 3 compatibility
+# import io  # Python 3 compatibility
+import locale
 
 
-if utils.LANG == 'PT':  # Portuguese
+def sys_lang():
+    """Get system language."""
+    lang = locale.getdefaultlocale()
+    # lang = 'EN'  # only for testing
+    if 'pt_' in lang[0]:  # Portuguese
+        return 'PT'
+    else:  # English
+        return 'EN'
+
+LANG = sys_lang()
+
+if LANG == 'PT':  # Portuguese
     ABOUT = 'Sobre'
     CHILD = 'Criança:'
     CONFIRM_EXIT = 'Tem a certeza que pretende sair?'
-    DAYS_GROUNDED = 'Dias de castigo'
     DAYS_RANGE = 'O número de dias tem que estar entre 0 e '
     EXIT = 'Sair'
     FILE = 'Ficheiro'
+    FILE_NOT_FOUND = 'Erro: ficheiro não encontrado - '
     HELP = 'Ajuda'
     LAST_UPDATE = 'Última atualização:'
     SET = 'Atribuir'
@@ -42,15 +56,16 @@ if utils.LANG == 'PT':  # Portuguese
     VERSION = 'Versão'
     VERSION_WITH_SPACES = ' versão '
     WARNING = 'AVISO'
+    WIN_TITLE = 'Dias de castigo'
     WRONG_ARG = 'Erro: argumento incorreto '
 else:  # English
     ABOUT = 'About'
     CHILD = 'Child:'
     CONFIRM_EXIT = 'Are you sure you want to exit?'
-    DAYS_GROUNDED = 'Days grounded'
     DAYS_RANGE = 'Number of days must be between 0 and '
     EXIT = 'Exit'
     FILE = 'File'
+    FILE_NOT_FOUND = 'Error: file not found - '
     HELP = 'Help'
     LAST_UPDATE = 'Last update:'
     SET = 'Set'
@@ -58,4 +73,11 @@ else:  # English
     VERSION = 'Version'
     VERSION_WITH_SPACES = ' version '
     WARNING = 'WARNING'
-    WRONG_ARG = 'Err: incorrect argument '
+    WIN_TITLE = 'Days grounded'
+    WRONG_ARG = 'Error: incorrect argument '
+
+
+if __name__ == '__main__':
+    # import doctest
+    # doctest.testmod(verbose=True)
+    pass

@@ -1,6 +1,7 @@
-include build.cmd setup_utils.py
-include *.rst *.txt
-include daysgrounded/*.txt
-recursive-include daysgrounded/doc *
+include *.cmd *.ini *.py *.rst *.txt *.yml
+include appveyor/*
 include doc/*.rst doc/*.py
 include pythonhosted.org/*
+include test/*.rst
+include daysgrounded/*.txt
+recursive-include daysgrounded/doc *

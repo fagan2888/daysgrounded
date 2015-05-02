@@ -24,11 +24,15 @@ from __future__ import division
 from __future__ import print_function
 from __future__ import unicode_literals
 
+# import builtins  # Python 3 compatibility
 import datetime as dt
+# import future  # Python 3 compatibility
+# import io  # Python 3 compatibility
 import sys
 
-import colorama
+import colorama as clrm
 
+import common
 import localization as lcl
 import shared as shrd
 
@@ -61,7 +65,7 @@ def man_upd(argv, childs, last_upd):
 
         try:
             days = int(days)
-        except ValueError:  # as err:
+        except ValueError:  # as error:
             arg_nok = arg
             args_ok = False
             break
@@ -93,8 +97,8 @@ def man_upd(argv, childs, last_upd):
         shrd.update_file(childs, last_upd)
         print_state(childs, last_upd)
     else:
-        print(colorama.Fore.RED + lcl.WRONG_ARG + arg_nok + '\n')
-        print(colorama.Fore.RESET + shrd.usage())
+        print(clrm.Fore.RED + lcl.WRONG_ARG + arg_nok + '\n')
+        print(clrm.Fore.RESET + common.usage())
 
 
 def auto_upd(childs, last_upd):
@@ -106,20 +110,20 @@ def auto_upd(childs, last_upd):
 
 def start(argv):
     """Print banner, read/create data & log file and process args."""
-    colorama.init()
+    clrm.init()
 
-    print(shrd.banner())
+    print(common.banner())
     childs, last_upd = shrd.open_create_datafile()
 
-    arg0 = argv[0].lower()
-    if arg0 in ['-h', '--help']:
-        print(shrd.usage())
-    elif arg0 in ['-v', '--version']:
-        print(lcl.VERSION, shrd.version())
-    elif arg0 in ['-l', '--license']:
-        print(shrd.license_())
-    elif arg0 in ['-a', '--auto']:
+    arg0 = argv[0]
+    if arg0 in ['-a', '--auto']:
         auto_upd(childs, last_upd)
+    elif arg0 in ['-h', '--help']:
+        print(common.usage())
+    elif arg0 in ['-l', '--license']:
+        print(common.license_())
+    elif arg0 in ['-V', '--version']:
+        print(lcl.VERSION, common.version())
     else:
         man_upd(argv, childs, last_upd)
 
@@ -127,6 +131,6 @@ def start(argv):
 
 
 if __name__ == '__main__':
-    #import doctest
-    #doctest.testmod(verbose=True)
+    # import doctest
+    # doctest.testmod(verbose=True)
     pass
