@@ -1,3 +1,8 @@
+0.0.33 2015-05-02 ::
+
+	Update .gitignore.
+
+
 0.0.32 2015-05-02 ::
 
 	Correct usage files.

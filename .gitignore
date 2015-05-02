@@ -29,3 +29,5 @@ venv/
 
 # project specific
 daysgrounded/__pycache__/
+daysgrounded/doc/
+daysgrounded/pythonhosted.org/*.zip
