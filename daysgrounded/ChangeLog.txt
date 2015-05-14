@@ -1,3 +1,8 @@
+0.0.34 2015-05-14 ::
+
+	Code cleanup.
+
+
 0.0.33 2015-05-02 ::
 
 	Update .gitignore.

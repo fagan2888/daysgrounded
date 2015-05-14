@@ -19,15 +19,14 @@
 """Localization."""
 
 # Python 3 compatibility
-from __future__ import absolute_import
-from __future__ import division
-from __future__ import print_function
-from __future__ import unicode_literals
+from __future__ import (absolute_import, division, print_function,
+                        unicode_literals)
 
-# import builtins  # Python 3 compatibility
-# import future  # Python 3 compatibility
 # import io  # Python 3 compatibility
 import locale
+import sys
+
+# from builtins import input  # Python 3 compatibility
 
 
 def sys_lang():
@@ -41,14 +40,20 @@ def sys_lang():
 
 LANG = sys_lang()
 
+FS_ENC = sys.getfilesystemencoding()
+INPUT_ENC = sys.stdin.encoding
+UTF_ENC = 'utf-8'
+
 if LANG == 'PT':  # Portuguese
     ABOUT = 'Sobre'
+    BANNER = ' não tem QUALQUER GARANTIA. É software livre e você está ' + \
+             'autorizado a redistribui-lo dentro de certas condições.'
     CHILD = 'Criança:'
     CONFIRM_EXIT = 'Tem a certeza que pretende sair?'
     DAYS_RANGE = 'O número de dias tem que estar entre 0 e '
     EXIT = 'Sair'
     FILE = 'Ficheiro'
-    FILE_NOT_FOUND = 'Erro: ficheiro não encontrado - '
+    FILE_NOT_FOUND = 'Erro: ficheiro não encontrado -'
     HELP = 'Ajuda'
     LAST_UPDATE = 'Última atualização:'
     SET = 'Atribuir'
@@ -60,12 +65,14 @@ if LANG == 'PT':  # Portuguese
     WRONG_ARG = 'Erro: argumento incorreto '
 else:  # English
     ABOUT = 'About'
+    BANNER = ' comes with ABSOLUTELY NO WARRANTY. This is free software, ' + \
+             'and you are welcome to redistribute it under certain conditions.'
     CHILD = 'Child:'
     CONFIRM_EXIT = 'Are you sure you want to exit?'
     DAYS_RANGE = 'Number of days must be between 0 and '
     EXIT = 'Exit'
     FILE = 'File'
-    FILE_NOT_FOUND = 'Error: file not found - '
+    FILE_NOT_FOUND = 'Error: file not found -'
     HELP = 'Help'
     LAST_UPDATE = 'Last update:'
     SET = 'Set'
